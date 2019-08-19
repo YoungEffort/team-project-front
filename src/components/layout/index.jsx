@@ -24,7 +24,9 @@ class Layouts extends Component {
          // 菜单展开
          openKeys: [],
          // tap'
-         tapData: [],
+         tapData: [
+            {  key: '0', title: '首页', path: '/home', closable: false }
+         ],
          tapActiveKey: '0',
          // 面包屑
          breadcrumbData: [],
@@ -102,11 +104,18 @@ class Layouts extends Component {
          onOff = true
       }
       if (onOff){
-         newTapData.push({
-            key: route.key, 
-            title: route.title , 
-            path: route.path
-         })
+         parseFloat(route.key) === 0 ? 
+            newTapData.push({
+               key: route.key, 
+               title: route.title , 
+               path: route.path,
+               closable: false
+            }) : 
+            newTapData.push({
+               key: route.key, 
+               title: route.title , 
+               path: route.path
+            })
       }
       this.setState({
          tapData: newTapData,
