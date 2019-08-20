@@ -16,7 +16,8 @@ const { CleanWebpackPlugin }= require('clean-webpack-plugin');
 
 //这个插件可以将样式文件从bundle.js抽离出来一个文件，并且支持chunk css
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
+// 打包日志
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 //多线程打包
 const HappyPack = require('happypack');
 const happyThreadPool = HappyPack.ThreadPool({ size: 3 });
@@ -31,6 +32,8 @@ module.exports={
       path: path.resolve(__dirname, 'dist'),
       chunkFilename: 'js/[name].js'
    },
+   // 只在错误的时候输出日志
+   stats: 'errors-only',
    //提取公共代码
    optimization: {
       splitChunks: {
@@ -138,7 +141,9 @@ module.exports={
       new webpack.DllReferencePlugin({
          context: __dirname,
          manifest: require('./dist/static/react.manifest.json')
-      })
+      }),
+      // 打包日志优化
+      new FriendlyErrorsWebpackPlugin()
    ],
    // 设置别名
    resolve: {
