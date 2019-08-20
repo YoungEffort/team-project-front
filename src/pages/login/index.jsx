@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import { Form, Icon, Input, Button } from 'antd'
-const FormItem = Form.Item
 import './style.less'
-
+import { loginPost } from '@/api/login.js'
+const FormItem = Form.Item
 class LoginForm extends Component {
    constructor (props) {
       super(props)
       this.state = {
          // 登录信息
          formData: {
-            username: '',
+            loginName: '',
             password: ''
          }  
       }
@@ -28,7 +28,13 @@ class LoginForm extends Component {
             this.setState({
                ...values
             })
-            console.log('登录数据: ', values);
+            loginPost({
+               ...values
+            }).then((res) => {
+               console.log(res)
+            }).carch((err) => {
+               console.log(err)
+            })
          }
       });
    }
@@ -39,7 +45,7 @@ class LoginForm extends Component {
             <div className = 'login-form'>
                <Form  onSubmit = { this.handleSubmit }>
                   <FormItem>
-                     { getFieldDecorator('username', {
+                     { getFieldDecorator('loginName', {
                         rules: [ { required: true, message: '请输入用户名!' } ]
                      })(
                         <Input

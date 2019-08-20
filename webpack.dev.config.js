@@ -46,13 +46,13 @@ module.exports=merge(
          open: false, // 不自动打开浏览器
          hot: true,
          progress: false,
-         clientLogLevel: 'none'  // 不在浏览器控制台输出错误
+         clientLogLevel: 'none',  // 不在浏览器控制台输出错误
          // 代理
-         // proxy: {
-         //    '/api/*': {
-         //       target: ''
-         //    }
-         // }
+         proxy: {
+            '/api/*': {
+               target: 'http://172.17.203.139:3000/'
+            }
+         }
       }
    }
 );

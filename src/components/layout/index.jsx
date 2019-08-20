@@ -10,7 +10,7 @@ import Siders from './siders'
 import Headers from './headers'
 import Contents from './contens'
 import './style.less'
-import RouterConfig from '@/routers/routerConfig' 
+import RouterConfig from '@/routers/routerConfig'
 class Layouts extends Component {
    constructor (props) {
       super (props)
@@ -45,17 +45,17 @@ class Layouts extends Component {
    componentWillReceiveProps () {
       // 判断路由 是从地址栏进入 还是回退 或前进 显示对应菜单和面包屑
       !this.state.isClickMenu ?
-         this.queryRouter(this.props.history.location.pathname) 
+         this.queryRouter(this.props.history.location.pathname)
          :
          this.setState({
             isClickMenu: false
          })
-      
+
    }
    // 根据路由显示对应菜单信息
-   queryRouter = (route) => { 
+   queryRouter = (route) => {
       // if (this.props.history.location.pathname === '/') {
-      //    this.setState({ 
+      //    this.setState({
       //       selectedKeys: [ '0' ],
       //       openKeys: [],
       //       tapActiveKey: '0',
@@ -74,7 +74,7 @@ class Layouts extends Component {
                selets = this.tapClickMenu(item.key)
                document.title =item.title
                item.key !== '0' ? this.queryBreadcrumb(item.key) : this.setState({ breadcrumbData: [] })
-               this.setState({ 
+               this.setState({
                   selectedKeys: [ item.key ],
                   openKeys: selets
                });
@@ -104,18 +104,11 @@ class Layouts extends Component {
          onOff = true
       }
       if (onOff){
-         parseFloat(route.key) === 0 ? 
-            newTapData.push({
-               key: route.key, 
-               title: route.title , 
-               path: route.path,
-               closable: false
-            }) : 
-            newTapData.push({
-               key: route.key, 
-               title: route.title , 
-               path: route.path
-            })
+         newTapData.push({
+            key: route.key,
+            title: route.title ,
+            path: route.path
+         })
       }
       this.setState({
          tapData: newTapData,
@@ -149,14 +142,14 @@ class Layouts extends Component {
             }
          }
       }
-   
+
       this.setState({
          openKeys: selets
       })
    }
    // 菜单被选中时的回调
    siderMenuOnSelect = ({ key }) => {
-      this.setState({ 
+      this.setState({
          selectedKeys: [ key ]
       })
    }
@@ -212,14 +205,14 @@ class Layouts extends Component {
          onOff = true
       }
       if (!onOff) return
-      newTapData.push( { 
-         key: activeItem.key, 
-         title: activeItem.title , 
+      newTapData.push( {
+         key: activeItem.key,
+         title: activeItem.title ,
          path: activeItem.path
       })
       this.setState({
          tapActiveKey: activeItem.key,
-         tapData: newTapData 
+         tapData: newTapData
       })
    }
    // 右侧tap栏 选中
@@ -228,13 +221,13 @@ class Layouts extends Component {
       let selets = []
       this.queryPath(routerConfig,activeKey)
       selets = this.tapClickMenu(activeKey)
-      this.setState({ 
+      this.setState({
          selectedKeys: [ activeKey ],
          tapActiveKey: activeKey,
-         openKeys: selets 
+         openKeys: selets
       });
       activeKey !== '0' ? this.queryBreadcrumb(activeKey) : this.setState({ breadcrumbData: [] })
-     
+
    }
    // tap选中 关闭时
    tapOnEdit = (targetKey, action) => {
@@ -268,7 +261,7 @@ class Layouts extends Component {
             this.props.history.push({ pathname: tapData[activeIndex-1].path })
             this.saveMenuData()
          })
-      } 
+      }
       this.setState({
          tapActiveKey: newTapActiveKey,
          tapData: newTabData
@@ -276,7 +269,7 @@ class Layouts extends Component {
          this.saveMenuData()
       })
    }
-   // tap 点击和关闭展开左侧菜单 
+   // tap 点击和关闭展开左侧菜单
    tapClickMenu = (key) => {
       let selects = []
       for (let i = 0; i < key.length; i++){
@@ -336,7 +329,7 @@ class Layouts extends Component {
             }
          }
       }
-      arr.sort((a,b) => parseFloat(a.key) - parseFloat(b.key)) 
+      arr.sort((a,b) => parseFloat(a.key) - parseFloat(b.key))
    }
    // 缓存菜单信息
    saveMenuData  = () => {
@@ -355,18 +348,18 @@ class Layouts extends Component {
    }
    // 路由拦截 判断是否登录 页面跳转
    confirmToSave = () => {
-      // window.location.reload(true); 
-      // 
+      // window.location.reload(true);
+      //
       // menuData && document.title !== menuData.pageTitle ? document.title = menuData.pageTitle : ''
       //  this.queryRouter(this.props.history.location.pathname)
    }
    render () {
-      let  { 
-         openKeys, 
-         tapData, 
-         tapActiveKey, 
-         selectedKeys, 
-         breadcrumbData, 
+      let  {
+         openKeys,
+         tapData,
+         tapActiveKey,
+         selectedKeys,
+         breadcrumbData,
          collapsed
       } = this.state
       return (
@@ -383,19 +376,19 @@ class Layouts extends Component {
                />
                <Layout>
                   <Headers
-                     tapData = { tapData }                
-                     breadcrumbData = { breadcrumbData }                 
-                     tapOnChange = { this.tapOnChange }                 
-                     tapOnEdit = { this.tapOnEdit }                               
-                     tapActiveKey = { tapActiveKey } 
-                     isShowSiders = { this.isShowSiders }                              
+                     tapData = { tapData }
+                     breadcrumbData = { breadcrumbData }
+                     tapOnChange = { this.tapOnChange }
+                     tapOnEdit = { this.tapOnEdit }
+                     tapActiveKey = { tapActiveKey }
+                     isShowSiders = { this.isShowSiders }
                   />
                   <Contents>
                      <div className = 'cy-layout-contents'>
-                        { this.props.children }  
+                        { this.props.children }
                      </div>
-                  </Contents>  
-               </Layout> 
+                  </Contents>
+               </Layout>
             </Layout>
          </div>
       )
