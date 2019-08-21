@@ -4,7 +4,7 @@
    2019-08-05
 */
 import React,{ Component } from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';                                
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom';                                
 import ErrorBoundary from './errorBoundary';                               // 错误边界处理 加载失败时的显示
 import RouterConfig from '@/routers/routerConfig' 
 import { Layout }  from '@/components/index'
@@ -17,14 +17,23 @@ class RouteApp extends Component {
    }
    // 递归渲染路由
    routerViews (data) {
+      let user_info = sessionStorage.user_info ?  JSON.parse(sessionStorage.user_info) : null
       return data.map((item) => {
          if (item.children && item.children.length >0) {
             return this.routerViews(item.children)
          }
          if (item.component ){
             return (
-               <Route path = { item.path }  component = { item.component }
-                  key = { item.key }
+               <Route key = { item.key } path = { item.path } exact
+                  render = { (props) => {
+                     return user_info ? <item.component { ...props } /> 
+                        : 
+                        <Redirect to = { {
+                           pathname: '/login',
+                           state: { from: props.location }
+                        } }
+                        />
+                  } }
                />
             )
          }

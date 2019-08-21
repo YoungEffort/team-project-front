@@ -16,8 +16,6 @@ const { CleanWebpackPlugin }= require('clean-webpack-plugin');
 
 //这个插件可以将样式文件从bundle.js抽离出来一个文件，并且支持chunk css
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// 打包日志
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 //多线程打包
 const HappyPack = require('happypack');
 const happyThreadPool = HappyPack.ThreadPool({ size: 3 });
@@ -141,20 +139,18 @@ module.exports={
       new webpack.DllReferencePlugin({
          context: __dirname,
          manifest: require('./dist/static/react.manifest.json')
-      }),
-      // 打包日志优化
-      new FriendlyErrorsWebpackPlugin()
+      })
    ],
    // 设置别名
    resolve: {
       // 指定以下目录寻找第三方模块，避免webpack往父级目录递归搜索
-      modules: [ path.resolve(__dirname, 'src'), 'node_modules' ],
+      modules: [ path.resolve(__dirname, 'src'), path.resolve('node_modules') ],
       alias: {
          '@': path.resolve(__dirname, 'src'),
-         'assets': './src/assets/',
-         'components':'./src/components/',
-         'pages':'./src/pages/',
-         'state':'./src/store/state/index'
+         'assets': path.resolve(__dirname, 'src/assets/'),
+         'components': path.resolve(__dirname, 'src/components/'),
+         'pages': path.resolve(__dirname, 'src/pages/'),
+         'state': path.resolve(__dirname, 'src/store/state/index')
       },
       enforceExtension: false,
       extensions: [ '.js', '.jsx', '.json', '.css', '.less' ]

@@ -12,10 +12,10 @@ module.exports = {
       node: true, //
       es6: true
    },
-   ecmaFeatures: {
-      "jsx": true
-    },
    parserOptions: {
+      ecmaFeatures: {
+         "jsx": true
+       },
       sourceType: 'module' // 按照模块的方式解析
    },
    settings: {

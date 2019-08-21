@@ -8,7 +8,8 @@ const path = require('path');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 const baseWebpackConfig = require('./webpack.base.config');
-
+// 打包日志
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 module.exports=merge(
    baseWebpackConfig,
    {
@@ -30,7 +31,15 @@ module.exports=merge(
       plugins:[
          //模块热替换
          new webpack.NamedModulesPlugin(),
-         new webpack.HotModuleReplacementPlugin()
+         new webpack.HotModuleReplacementPlugin(),
+         // 打包日志优化
+         new FriendlyErrorsWebpackPlugin({
+            // 运行成功
+            compilationSuccessInfo: {
+               message: 'http://localhost:9999/',
+               notes: [ '' ]
+            }
+         }) 
       ],
       //本地服务器配置
       devServer: {

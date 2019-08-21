@@ -54,15 +54,6 @@ class Layouts extends Component {
    }
    // 根据路由显示对应菜单信息
    queryRouter = (route) => {
-      // if (this.props.history.location.pathname === '/') {
-      //    this.setState({
-      //       selectedKeys: [ '0' ],
-      //       openKeys: [],
-      //       tapActiveKey: '0',
-      //       breadcrumbData: []
-      //    });
-      //    return
-      // }
       let { routerConfig } = this.state
       let query = (routeData, route) => {
          let len = routeData.length
@@ -348,10 +339,12 @@ class Layouts extends Component {
    }
    // 路由拦截 判断是否登录 页面跳转
    confirmToSave = () => {
-      // window.location.reload(true);
-      //
-      // menuData && document.title !== menuData.pageTitle ? document.title = menuData.pageTitle : ''
-      //  this.queryRouter(this.props.history.location.pathname)
+      // location
+      // let user_info = sessionStorage.user_info ?  JSON.parse(sessionStorage.user_info) : null
+      // if (!user_info) {
+      //    console.log (11111)
+      //    return false
+      // }
    }
    render () {
       let  {
