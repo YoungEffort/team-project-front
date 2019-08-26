@@ -11,7 +11,10 @@ class Login extends Component {
          <>
             <FormItem>
                { getFieldDecorator('loginName', {
-                  rules: [ { required: true, message: '请输入用户名!' } ]
+                  rules: [ 
+                     { required: true, message: '请输入用户名!' },
+                     { whitespace: true, message: '不能输入空格' }
+                  ]
                })(
                   <Input
                      prefix = { <Icon type = 'user' style = { { color: 'rgba(0,0,0,.25)' } } /> }
@@ -21,7 +24,10 @@ class Login extends Component {
             </FormItem>
             <FormItem>
                { getFieldDecorator('password', {
-                  rules: [ { required: true, message: '请输入登录密码!' } ]
+                  rules: [ 
+                     { required: true, message: '请输入登录密码!' },
+                     { whitespace: true, message: '不能输入空格' }
+                  ]
                })(
                   <Input
                      prefix = { <Icon type = 'lock' style = { { color: 'rgba(0,0,0,.25)' } } /> }

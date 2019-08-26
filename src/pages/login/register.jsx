@@ -5,10 +5,19 @@
 */
 import React, { Component } from 'react'
 import { Form, Icon, Input, Button  } from 'antd'
+import { phone } from '../../utils/reg'
 const FormItem = Form.Item
 class Register extends Component {
    componentDidMount () {
       document.title  = '注册'
+   }
+   // 验证手机号
+   validatorPass = (rule, value, callback) => {
+      const { getFieldValue } = this.props
+      if (value && value !== getFieldValue('password') ) {
+         callback('两次密码输入不一致！')
+      }
+      callback()
    }
    render () {
       const { getFieldDecorator } = this.props
@@ -16,7 +25,10 @@ class Register extends Component {
          <>
          <FormItem>
             { getFieldDecorator('loginName', {
-               rules: [ { required: true, message: '请输入用户名!' } ]
+               rules: [
+                  { required: true, message: '请输入用户名!' },
+                  { whitespace: true, message: '不能输入空格' }
+               ]
             })(
                <Input
                   prefix = { <Icon type = 'user' style = { { color: 'rgba(0,0,0,.25)' } } /> }
@@ -26,23 +38,60 @@ class Register extends Component {
          </FormItem>
          <FormItem>
             { getFieldDecorator('password', {
-               rules: [ { required: true, message: '请输入密码!' } ]
+               rules: [
+                  { required: true, message: '请输入密码!' },
+                  { whitespace: true, message: '不能输入空格' }
+               ]
             })(
                <Input
                   prefix = { <Icon type = 'lock' style = { { color: 'rgba(0,0,0,.25)' } } /> }
                   type = 'password'
-                  placeholder = '请输入密码'
+                  placeholder = '请输入设置密码'
                />
             ) }
          </FormItem>
          <FormItem>
             { getFieldDecorator('newPassword', {
-               rules: [ { required: true, message: '请输入密码!' } ]
+               rules: [ 
+                  { required: true, message: '请输入确认密码!' },
+                  { whitespace: true, message: '不能输入空格' },
+                  { validator: this.validatorPass }
+               ]
             })(
                <Input
                   prefix = { <Icon type = 'lock' style = { { color: 'rgba(0,0,0,.25)' } } /> }
                   type = 'password'
                   placeholder = '请再次输入密码'
+               />
+            ) }
+         </FormItem>
+         <FormItem>
+            { getFieldDecorator('phone', {
+               rules: [ 
+                  { required: true, message: '请输入手机号' },
+                  { whitespace: true, message: '不能输入空格' },
+                  { pattern: phone, message: '手机号格式错误' }
+               ]
+            })(
+               <Input
+                  prefix = { <Icon type = 'mobile' style = { { color: 'rgba(0,0,0,.25)' } } /> }
+                  type = 'text'
+                  maxLength = { 11 }
+                  placeholder = '请输入手机号'
+               />
+            ) }
+         </FormItem>
+         <FormItem>
+            { getFieldDecorator('code', {
+               rules: [ 
+                  { required: true, message: '请输入验证码' },
+                  { whitespace: true, message: '不能输入空格' }
+               ]
+            })(
+               <Input
+                  prefix = { <Icon type = 'code' style = { { color: 'rgba(0,0,0,.25)' } } /> }
+                  type = 'text'
+                  placeholder = '请输入验证码'
                />
             ) }
          </FormItem>

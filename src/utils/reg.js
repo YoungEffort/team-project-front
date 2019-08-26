@@ -2,7 +2,8 @@ const trim = /(^\s*)|(\s*$)/g
 const phone = /^[1][3-9][0-9]{9}$/
 const number = /^[0-9]*[1-9][0-9]*$/
 const number1 = /^[1-9][0-9]*([.][0-9]+)?$/ // 带小数点
-const letterChinese = /^[a-zA-Z\u4e00-\u9fa5]+$/
+const letterChinese = /^[a-zA-Z\u4e00-\u9fa5]+$/ // 只容许输入字母中文
+const letterNumChinese = /^[a-zA-Z0-9\u4e00-\u9fa5]+$/ // 只容许输入字母中文数字
 let email = /()/
 // 车牌
 let carNumbers = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$/
@@ -12,7 +13,13 @@ let carEnergyNumbers = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂
 let carNweNum = /^(([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z](([0-9]{5}[DF])|([DF]([A-HJ-NP-Z0-9])[0-9]{4})))|([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z][A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳使领]))$/
 
 // 清楚前后空格
-function clearTrim (str) {
+function clearTrim (obj,str) {
+   for (let i in obj) {
+      if (Object.prototype.toString.call(obj[i])== '[object String]') {
+         obj[i] = obj[i].replace(trim, '')
+      }
+      return obj
+   }
    str = str.replace(trim, '')
    return str
 }
@@ -106,5 +113,6 @@ export {
    carNumbers,
    carEnergyNumbers,
    carNweNum,
-   letterChinese
+   letterChinese,
+   letterNumChinese
 }

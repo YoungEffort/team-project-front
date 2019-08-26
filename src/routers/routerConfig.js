@@ -15,11 +15,24 @@ const routerData = [
    },
    {
       icon: 'deployment-unit',
-      title: 'react技术应用',
+      title: '项目管理',
       name: 'reactUse',
       children: [
          {
-            title: 'Context',
+            title: '项目看板',
+            name: 'context',
+            path: '/reactUse/context',
+            component: Loadable(() => import('@/pages/context'))
+         }
+      ]
+   },
+   {
+      icon: 'deployment-unit',
+      title: '技术栈管理',
+      name: 'reactUse',
+      children: [
+         {
+            title: '技术栈看板',
             name: 'context',
             path: '/reactUse/context',
             component: Loadable(() => import('@/pages/context'))
