@@ -94,9 +94,9 @@ class LoginRegisterForm extends Component {
       })  
    }
    //  忘记密码提交
-   viewsCompont = () => {
+   // viewsCompont = () => {
       
-   }
+   // }
    render () {
       let { isShow } = this.state
       const { getFieldDecorator, getFieldValue } = this.props.form

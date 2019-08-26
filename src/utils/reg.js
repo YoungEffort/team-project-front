@@ -14,6 +14,7 @@ let carNweNum = /^(([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘�
 
 // 清楚前后空格
 function clearTrim (obj,str) {
+   // eslint-disable-next-line no-unused-vars
    for (let i in obj) {
       if (Object.prototype.toString.call(obj[i])== '[object String]') {
          obj[i] = obj[i].replace(trim, '')

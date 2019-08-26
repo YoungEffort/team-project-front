@@ -29,13 +29,13 @@ const routerData = [
    {
       icon: 'deployment-unit',
       title: '技术栈管理',
-      name: 'reactUse',
+      name: 'tech',
       children: [
          {
             title: '技术栈看板',
-            name: 'context',
-            path: '/reactUse/context',
-            component: Loadable(() => import('@/pages/context'))
+            name: 'techBoard',
+            path: '/tech/techBoard',
+            component: Loadable(() => import('@/pages/techBoard'))
          }
       ]
    }
