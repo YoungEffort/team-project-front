@@ -24,8 +24,8 @@ class techBoard extends Component {
          <div className = 'tech-board'>
             <Row gutter = { 16 }>
                { this.state.data.map((item,i) => 
-                  <Col span = { 3 } key = { i } className = 'mrb-10'>
-                     <Card style = { { width: 200 } } hoverable>
+                  <Col span = { 4 } key = { i } className = 'mrb-10'>
+                     <Card style = { { width: '97%' } } hoverable>
                         <h3 className = 'mrb-5'>技术栈：{ item.tech }</h3>
                         <p className = 'mrb-5 cl1'>负责人：{ item.principal }</p>
                         <p className = 'cl2'>状态：{ item.state }...</p>
