@@ -40,11 +40,38 @@ class RouteApp extends Component {
       })
    }
    render () {
+      let user_info = sessionStorage.user_info ?  JSON.parse(sessionStorage.user_info) : null
       return (
          <ErrorBoundary>
             <Switch>
-               <Route path = '/' exact component = { Login } />
-               <Route path = '/login' exact component = { Login } />
+               <Route path = '/' exact
+                  render = { 
+                     (props) => {
+                        return user_info ?  
+                           <Redirect  to = { {
+                              pathname: '/home',
+                              state: { from: props.location }
+                           } }
+                           />
+                           :
+                           <Login { ...props } />  
+                     } 
+                  }
+               />
+               <Route path = '/login' exact 
+                  render = { 
+                     (props) => {
+                        return user_info ?  
+                           <Redirect  to = { {
+                              pathname: '/home',
+                              state: { from: props.location }
+                           } }
+                           />
+                           :
+                           <Login { ...props } />  
+                     } 
+                  }
+               />
                <Layout history = { this.props.history } >
                   <Switch>
                      { this.routerViews(RouterConfig) }

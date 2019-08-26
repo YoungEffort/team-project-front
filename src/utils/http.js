@@ -11,8 +11,7 @@ import { isLocalDev } from '@/api/server'
 
 
 // 接口token 白名单
-const whiteList = [ '/api/user/login', '/api/user/register' ]
-// eslint-disable-next-line no-unused-vars
+const whiteList = [ '/api/user/login', '/api/user/register', '/api/user/forget' ]
 const isInWhiteList = function (url) {
    let flag = false
    whiteList.forEach(function (e) {
@@ -51,7 +50,7 @@ Axios.interceptors.response.use(
       } else {
          notification.error({
             message: data.code,
-            description:  data.msg,
+            description: data.msg,
             key: 0,
             duration: 3
          })

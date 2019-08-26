@@ -5,7 +5,7 @@
 */
 import React, { Component } from 'react'
 import { Form, Icon, Input, Button  } from 'antd'
-import { phone } from '../../utils/reg'
+import { phone } from '@/utils/reg'
 const FormItem = Form.Item
 class Register extends Component {
    componentDidMount () {
@@ -14,7 +14,7 @@ class Register extends Component {
    // 验证手机号
    validatorPass = (rule, value, callback) => {
       const { getFieldValue } = this.props
-      if (value && value !== getFieldValue('password') ) {
+      if (value && value !== getFieldValue('newPassword') ) {
          callback('两次密码输入不一致！')
       }
       callback()
@@ -37,7 +37,7 @@ class Register extends Component {
             ) }
          </FormItem>
          <FormItem>
-            { getFieldDecorator('password', {
+            { getFieldDecorator('newPassword', {
                rules: [
                   { required: true, message: '请输入密码!' },
                   { whitespace: true, message: '不能输入空格' }
@@ -51,7 +51,7 @@ class Register extends Component {
             ) }
          </FormItem>
          <FormItem>
-            { getFieldDecorator('newPassword', {
+            { getFieldDecorator('password', {
                rules: [ 
                   { required: true, message: '请输入确认密码!' },
                   { whitespace: true, message: '不能输入空格' },
@@ -68,7 +68,7 @@ class Register extends Component {
          <FormItem>
             { getFieldDecorator('phone', {
                rules: [ 
-                  { required: true, message: '请输入手机号' },
+                  { required: true, message: '请输入手机号!' },
                   { whitespace: true, message: '不能输入空格' },
                   { pattern: phone, message: '手机号格式错误' }
                ]
