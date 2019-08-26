@@ -10,10 +10,17 @@ export const loginPost = params => {
    })
 }
 // 注册
-
 export const registerPost = params => {
    return axios.request({
       url: '/api/user/register',
+      method: 'post',
+      data: params
+   })
+}
+// 忘记密码
+export const forgetPassPost = params => {
+   return axios.request({
+      url: '/api/user/forget',
       method: 'post',
       data: params
    })
