@@ -15,6 +15,7 @@ class RouteApp extends Component {
    constructor (props){
       super(props)
    }
+   // 判断当前是否登录 跳转页面
    // 递归渲染路由
    routerViews (data) {
       let user_info = sessionStorage.user_info ?  JSON.parse(sessionStorage.user_info) : null

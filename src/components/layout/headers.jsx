@@ -82,14 +82,16 @@ class Headers extends Component {
    };
    render () {
       let { fullScreenText, fullScreenIcon } = this.state
-      let { tapData, tapActiveKey, tapOnChange, tapOnEdit, breadcrumbData, isShowSiders } = this.props
+      let { tapData, tapActiveKey, tapOnChange, tapOnEdit, breadcrumbData, isShowSiders,
+         passModalHideShow, quitLogin
+      } = this.props
       const menu = (
          <Menu>
             <Menu.Item>
-               <div>修改密码</div>
+               <div onClick = { passModalHideShow }>修改密码</div>
             </Menu.Item>
             <Menu.Item>
-               <div>退出登录</div>
+               <div onClick = { quitLogin }>退出登录</div>
             </Menu.Item>
          </Menu>
       );

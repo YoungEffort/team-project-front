@@ -5,12 +5,14 @@
 */
 import React, { Component } from 'react'
 import { Prompt } from 'react-router-dom';
-import { Layout  } from 'antd'
+import { Layout, message, Modal } from 'antd'
 import Siders from './siders'
 import Headers from './headers'
 import Contents from './contens'
+import { forgetPassPost } from '@/api/login.js'
 import './style.less'
 import RouterConfig from '@/routers/routerConfig'
+import PassMoadl from './compont/passModal'
 class Layouts extends Component {
    constructor (props) {
       super (props)
@@ -32,7 +34,9 @@ class Layouts extends Component {
          breadcrumbData: [],
          // 页面title
          pageTitle: '首页',
-         isClickMenu: false
+         isClickMenu: false,
+         // 修改密码弹窗
+         passMoadlVisible: false
       }
    }
    componentDidMount () {
@@ -337,6 +341,43 @@ class Layouts extends Component {
       }
       window.sessionStorage.setItem('menuData', JSON.stringify(menuData))
    }
+   // 修改密码弹窗显示隐藏
+   passModalHideShow = () => {
+      let { passMoadlVisible } = this.state
+      passMoadlVisible ? passMoadlVisible = false : passMoadlVisible = true
+      this.setState({
+         passMoadlVisible
+      })
+   }
+   // 修改密码 确认 发起请求
+   changePassPost = (data, form) => {
+      console.log(data,form)
+      forgetPassPost({
+         ...data
+      }).then((res) => {
+         if (parseFloat(res.code) === 200) {
+            form.resetFields()
+            message.success('修改密码成功')
+            this.passModalHideShow()
+         }
+      }).carch((err) => {
+         console.log(err)
+      })  
+   }
+   // 退出登录
+   quitLogin = () => {
+      let _this = this
+      Modal.confirm({
+         title: '退出登录',
+         content: '是否确认退出登录？',
+         okText: '确认',
+         cancelText: '取消',
+         onOk () {
+            sessionStorage.removeItem('user_info')
+            _this.props.history.push({ pathname: '/login' })
+         }
+      });
+   }
    // 路由拦截 判断是否登录 页面跳转
    confirmToSave = () => {
       // location
@@ -353,7 +394,8 @@ class Layouts extends Component {
          tapActiveKey,
          selectedKeys,
          breadcrumbData,
-         collapsed
+         collapsed,
+         passMoadlVisible
       } = this.state
       return (
          <div className = 'cy-layout'>
@@ -375,6 +417,8 @@ class Layouts extends Component {
                      tapOnEdit = { this.tapOnEdit }
                      tapActiveKey = { tapActiveKey }
                      isShowSiders = { this.isShowSiders }
+                     passModalHideShow = { this.passModalHideShow }
+                     quitLogin = { this.quitLogin }
                   />
                   <Contents>
                      <div className = 'cy-layout-contents'>
@@ -383,6 +427,11 @@ class Layouts extends Component {
                   </Contents>
                </Layout>
             </Layout>
+            <PassMoadl 
+               passMoadlVisible = { passMoadlVisible }
+               passModalHideShow = { this.passModalHideShow }
+               changePassPost = { this.changePassPost }
+            />
          </div>
       )
    }

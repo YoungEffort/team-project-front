@@ -90,7 +90,7 @@ class LoginRegisterForm extends Component {
          ...ForgetPassData
       }).then((res) => {
          if (parseFloat(res.code) === 200) {
-            message.success('重置密码成功')
+            message.success('密码修改成功')
             this.goLoginRegister(0)
          }
       }).carch((err) => {
@@ -101,7 +101,6 @@ class LoginRegisterForm extends Component {
    viewsCompont = () => {
       let { isShow } = this.state
       const { getFieldDecorator, getFieldValue } = this.props.form
-
       switch (isShow) {
       case 1 :
          return (

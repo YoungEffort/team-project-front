@@ -16,13 +16,13 @@ const routerData = [
    {
       icon: 'deployment-unit',
       title: '项目管理',
-      name: 'reactUse',
+      name: 'itemAdmin',
       children: [
          {
             title: '项目看板',
-            name: 'context',
-            path: '/reactUse/context',
-            component: Loadable(() => import('@/pages/context'))
+            name: 'itemBoard',
+            path: '/itemAdmin/itemBoard',
+            component: Loadable(() => import('@/pages/itemBoard'))
          }
       ]
    },

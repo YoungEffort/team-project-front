@@ -1,21 +1,17 @@
 /*
-   高阶组件
+   项目看板
    秦国胜
-   2019-08-19
+   2019-08-26
 */
-
 import React, { Component } from 'react'
 
-// 高阶组件是纯函数
-
-
-class Hoc extends Component {
+class ItemBoard extends Component {
    render () {
       return (
          <div>
-             高阶组件
+            项目看板
          </div>
       )
    }
 }
-export default Hoc
+export default  ItemBoard
