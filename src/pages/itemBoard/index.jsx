@@ -7,23 +7,31 @@ import React, { Component } from 'react'
 import { Tooltip, Card, Icon, Row, Col, Button } from 'antd'
 import './style.less'
 import ItemSearch from './component/search' // 查询
-import AddItem from './component/addItem' // 新增
+import AddCompileItem from './component/addCompileItem' // 新增
 import { clearTrim } from '@/utils/reg'
 import { querylist, deleteProject, addProject } from '@/api/itemBoard'
-import Item from 'antd/lib/list/Item';
 class ItemBoard extends Component {
    constructor (props) {
       super (props)
       this.state = {
          // 弹窗显示
          addMoadlVisible: false,
+         // 新增编辑弹窗数据
+         addCompileData: {
+            pid: '', // 项目id
+            img: '', // 项目预览图片
+            p_name: '', // 项目名称
+            login_name: '', // 开发人员
+            description: '' // 项目描述
+         },
+         // 卡片数据
          cardData: [
-            {
-               img: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
-               title: '项目一',
-               develop: '张三、李四、王麻子',
-               describe: '企业级管理后台'
-            }
+            // {
+            //    img: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+            //    title: '项目一',
+            //    develop: '张三、李四、王麻子',
+            //    describe: '企业级管理后台'
+            // }
          ]
       }
    }
@@ -54,15 +62,23 @@ class ItemBoard extends Component {
    }
    // 新增--弹窗显示隐藏
    addModalShowHide = (form) => {
-      let { addMoadlVisible } = this.state
+      let { addMoadlVisible, addCompileData } = this.state
       if (addMoadlVisible) {
          addMoadlVisible = false
+         addCompileData = {
+            pid: '', // 项目id
+            img: '', // 项目预览图片
+            p_name: '', // 项目名称
+            login_name: '', // 开发人员
+            description: '' // 项目描述
+         },
          form.resetFields()
       } else {
          addMoadlVisible = true
       }
       this.setState({
-         addMoadlVisible
+         addMoadlVisible,
+         addCompileData
       })
    }
    // 新增--弹窗确定
@@ -88,8 +104,24 @@ class ItemBoard extends Component {
             }
          })
    }
+   // 编辑--项目
+   compileItem = (item) => {
+      console.log(item)
+      let _this = this
+      this.setState ({
+         addCompileData: {
+            ... _this.state.addCompileData,
+            ...item
+         }
+      })
+      this.addModalShowHide()
+   }
    render () {
-      let { addMoadlVisible, cardData } = this.state
+      let {
+         addMoadlVisible,
+         addCompileData,
+         cardData 
+      } = this.state
       return (
          <div className = 'item-board'>
             <ItemSearch />
@@ -98,7 +130,7 @@ class ItemBoard extends Component {
             </div>
             <div className = 'item-board-card'>
                {
-                  cardData.map((item, index) => {
+                  cardData.map((item) => {
                      return (
                         <Card
                            key = { item.pid }
@@ -111,7 +143,12 @@ class ItemBoard extends Component {
                               />
                            }
                            actions = { [
-                              <Tooltip key = 'edit' title = '编辑'>
+                              <Tooltip key = 'edit' title = '编辑' onClick = { 
+                                 () => {
+                                    this.compileItem(item) 
+                                 } 
+                              }
+                              >
                                  <Icon type = 'edit' />
                               </Tooltip>,
                               <Tooltip key = 'delete' title = '删除'>
@@ -130,7 +167,8 @@ class ItemBoard extends Component {
                   })
                }
             </div>
-            <AddItem
+            <AddCompileItem
+               addCompileData = { addCompileData }
                addMoadlVisible = { addMoadlVisible }
                addModalShowHide = { this.addModalShowHide }
                addModalConfirm = { this.addModalConfirm }

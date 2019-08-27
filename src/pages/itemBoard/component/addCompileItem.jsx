@@ -1,9 +1,9 @@
-// 新增项目
+// 新增项目 编辑项目
 import React, { Component } from 'react'
 import { Form, Input, Modal } from 'antd'
 const FormItem = Form.Item
 const { TextArea } = Input
-class addItemFom extends Component {
+class AddCompileItemFom extends Component {
    constructor (props) {
       super(props)
       this.state = {
@@ -27,7 +27,7 @@ class addItemFom extends Component {
          >
             <Form layout = 'inline'>
                <FormItem label = '项目名称'>
-                  { getFieldDecorator('pName', {
+                  { getFieldDecorator('p_name', {
                      rules: [
                         { required: true, message: '请输入项目名称' },
                         { whitespace: true, message: '不能输入空格' }
@@ -39,7 +39,7 @@ class addItemFom extends Component {
                   ) }
                </FormItem>
                <FormItem label = '开发人员'>
-                  { getFieldDecorator('developer', {
+                  { getFieldDecorator('login_name', {
                      rules: [ 
                         { required: true, message: '请输入开发人员' },
                         { whitespace: true, message: '不能输入空格' }
@@ -80,5 +80,23 @@ class addItemFom extends Component {
    }
 }
 
-const addItem = Form.create({ name: 'login-from' })(addItemFom)
-export default  addItem
+const AddCompileItem = Form.create({
+   name: 'add-compile-from',
+   mapPropsToFields (props) {
+      return {
+         p_name: Form.createFormField({
+            ...props.addCompileData,
+            value: props.addCompileData.p_name
+         }),
+         login_name: Form.createFormField({
+            ...props.addCompileData,
+            value: props.addCompileData.login_name
+         }),
+         description: Form.createFormField({
+            ...props.addCompileData,
+            value: props.addCompileData.description
+         })
+      };
+   }
+})(AddCompileItemFom)
+export default  AddCompileItem
