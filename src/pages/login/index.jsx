@@ -2,7 +2,7 @@
    登录
 */
 import React, { Component } from 'react'
-import { Form, message } from 'antd'
+import { message } from 'antd'
 import './style.less'
 import { loginPost, registerPost, forgetPassPost } from '@/api/login.js'
 import Login from './login'
@@ -14,25 +14,7 @@ class LoginRegister extends Component {
       super(props)
       this.state = {
          // 判断当前是登录还是注册 0 登录 1 注册
-         isShow: 0,
-         // 登录数据
-         loginData: {
-            loginName: '',
-            password: ''
-         },
-         // 注册数据
-         registerData: {
-            loginName: '',
-            password: '',
-            phone: '',
-            code: ''
-         },
-         // 重置密码
-         forgetPassData: {
-            loginName: '',
-            password: '',
-            phone: ''
-         }
+         isShow: 0
       }
    }
    // 登录注册忘记密码组件切换
