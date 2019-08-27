@@ -26,8 +26,8 @@ class ItemBoard extends Component {
    render () {
       return (
          <div className = 'item-board'>
-            <Row gutter = { 24 }>
-               <Col className = 'gutter-row' span = { 4 }>
+            <Row gutter = { 24 }  className = 'item-board-row'>
+               <Col span = { 4 }>
                   <Card
                      hoverable
                      cover = {
@@ -41,12 +41,13 @@ class ItemBoard extends Component {
                         <Tooltip key = 'edit' title = '编辑'>
                            <Icon type = 'edit' />
                         </Tooltip>,
-                        <Tooltip key = 'ellipsis' title = '详情'>
-                           <Icon type = 'ellipsis' />
-                        </Tooltip>,
                         <Tooltip key = 'delete' title = '删除'>
                            <Icon type = 'delete' />
+                        </Tooltip>,
+                        <Tooltip key = 'ellipsis' title = '详情'>
+                           <Icon type = 'ellipsis' />
                         </Tooltip>
+                        
                      ] }
                   >
                      <p className = 'card-text leave_out cl-0'>项目名称：项目-1</p>

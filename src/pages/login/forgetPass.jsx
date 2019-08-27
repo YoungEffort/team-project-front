@@ -5,14 +5,15 @@ import React, { Component } from 'react'
 import { Form, Icon, Input, Button  } from 'antd'
 import { phone } from '@/utils/reg'
 const FormItem = Form.Item
-class forgetPass extends Component {
+class forgetPassForm extends Component {
    componentDidMount () {
       document.title  = '忘记密码'
    }
    render () {
-      const { getFieldDecorator } = this.props
+      const { form, enterKeySubmit, commonSubmit } = this.props
+      const { getFieldDecorator } = form
       return (
-         <>
+         <Form onSubmit = { (e) => commonSubmit(e,form) }>
             <FormItem>
                { getFieldDecorator('loginName', {
                   rules: [
@@ -53,14 +54,18 @@ class forgetPass extends Component {
                      prefix = { <Icon type = 'lock' style = { { color: 'rgba(0,0,0,.25)' } } /> }
                      type = 'password'
                      placeholder = '请输入设置密码'
+                     onKeyPress = { (e) => enterKeySubmit (e,form) }
                   />
                ) }
             </FormItem>
             <FormItem className = 'form-submit'>
                <Button type = 'primary' htmlType = 'submit'>确&nbsp;&nbsp;&nbsp;定</Button>
             </FormItem>
-         </>
+         </Form>
       )
    }
 }
-export default  forgetPass
+
+const forgetPass = Form.create({ name: 'login-from' })(forgetPassForm);
+
+export default forgetPass

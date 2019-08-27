@@ -9,12 +9,30 @@ import Login from './login'
 import Register from './register'
 import ForgetPass from './forgetPass'
 import { clearTrim } from '../../utils/reg'
-class LoginRegisterForm extends Component {
+class LoginRegister extends Component {
    constructor (props) {
       super(props)
       this.state = {
          // 判断当前是登录还是注册 0 登录 1 注册
-         isShow: 0
+         isShow: 0,
+         // 登录数据
+         loginData: {
+            loginName: '',
+            password: ''
+         },
+         // 注册数据
+         registerData: {
+            loginName: '',
+            password: '',
+            phone: '',
+            code: ''
+         },
+         // 重置密码
+         forgetPassData: {
+            loginName: '',
+            password: '',
+            phone: ''
+         }
       }
    }
    // 登录注册忘记密码组件切换
@@ -22,20 +40,37 @@ class LoginRegisterForm extends Component {
       // 0 登录 1 注册 2 忘记密码 
       let { isShow } = this.state
       isShow = type
-      this.props.form.resetFields()
       this.setState({
          isShow
       })
    }
-   // 登录提交
-   handleSubmit = e => {
-      e.preventDefault();
-      this.props.form.validateFields((err, values) => {
+   // 公共提交
+   commonSubmit = (e, form) => {
+      let { isShow } = this.state
+      e.preventDefault()
+      form.validateFields((err, values) => {
          if (!err) {
             values = clearTrim(values)
-            this.postLogin(values)
+            switch (isShow) {
+            case 1:
+               this.postRegister(values)
+               break
+            case 2:
+               this.postForgetPass(values)
+               break   
+            default: 
+               this.postLogin(values)
+               break
+            }
+            
          }
-      });
+      })
+   }
+   // 回车登录Submit
+   enterKeySubmit = (e,from) => {
+      if(e.nativeEvent.keyCode === 13){ // e.nativeEvent获取原生的事件对像
+         this.commonSubmit (e,from)
+      }
    }
    // 发起登录请求
    postLogin = (loginData) => {
@@ -51,21 +86,12 @@ class LoginRegisterForm extends Component {
          }
       })
    }
-   // 注册提交
-   registerSubmit = e => {
-      e.preventDefault();
-      this.props.form.validateFields((err, values) => {
-         if (!err) {
-            values = clearTrim(values)
-            let newValues = JSON.parse(JSON.stringify(values))
-            delete newValues.newPassword
-            this.postRegister(newValues)
-         }
-      });
-   }
+   // 注册提交请求
    postRegister = (registerData) => {
+      let  newValues = JSON.parse(JSON.stringify(registerData))     
+      delete newValues.newPassword
       registerPost({
-         ...registerData
+         ...newValues
       }).then((res) => {
          if (parseFloat(res.code) === 200) {
             message.success('注册成功')
@@ -76,18 +102,9 @@ class LoginRegisterForm extends Component {
       })  
    }
    // 忘记密码提交
-   forgetPassSubmit = e => {
-      e.preventDefault();
-      this.props.form.validateFields((err, values) => {
-         if (!err) {
-            values = clearTrim(values)
-            this.postForgetPass(values)
-         }
-      });
-   }
-   postForgetPass = (ForgetPassData) => {
+   postForgetPass = (forgetPassData) => {
       forgetPassPost({
-         ...ForgetPassData
+         ...forgetPassData
       }).then((res) => {
          if (parseFloat(res.code) === 200) {
             message.success('密码修改成功')
@@ -99,8 +116,9 @@ class LoginRegisterForm extends Component {
    }
    //  页面展示
    viewsCompont = () => {
-      let { isShow } = this.state
-      const { getFieldDecorator, getFieldValue } = this.props.form
+      let { 
+         isShow
+      } = this.state
       switch (isShow) {
       case 1 :
          return (
@@ -108,12 +126,10 @@ class LoginRegisterForm extends Component {
                      <h3 className = 'login-form-title'>
                         <span>注&nbsp;&nbsp;册</span>
                      </h3>
-                     <Form onSubmit = { this.registerSubmit }>
-                        <Register
-                           getFieldDecorator = { getFieldDecorator }
-                           getFieldValue = { getFieldValue }
-                        />
-                     </Form>
+                     <Register
+                        enterKeySubmit = { this.enterKeySubmit }
+                        commonSubmit = { this.commonSubmit }
+                     />
                   </>
          )
       case 2 :
@@ -122,22 +138,22 @@ class LoginRegisterForm extends Component {
                      <h3 className = 'login-form-title'>
                         <span>忘记密码</span>
                      </h3>
-                     <Form onSubmit = { this.forgetPassSubmit }>
-                        <ForgetPass
-                           getFieldDecorator = { getFieldDecorator }
-                        />
-                     </Form>
+                     <ForgetPass
+                        enterKeySubmit = { this.enterKeySubmit }
+                        commonSubmit = { this.commonSubmit }
+                     />
                   </>
          )   
       default : 
          return (
                   <>
-                     <h3 className = 'login-form-title'>
+                     <h3  className = 'login-form-title'>
                         <span>登&nbsp;&nbsp;录</span>
                      </h3>
-                     <Form onSubmit = { this.handleSubmit }>
-                        <Login  getFieldDecorator = { getFieldDecorator } />
-                     </Form>
+                     <Login
+                        enterKeySubmit = { this.enterKeySubmit }
+                        commonSubmit = { this.commonSubmit }
+                     />
                   </>
          )
       }
@@ -174,5 +190,5 @@ class LoginRegisterForm extends Component {
       )
    }
 }
-const LoginRegister = Form.create({ name: 'horizontal_login' })(LoginRegisterForm);
+
 export default LoginRegister

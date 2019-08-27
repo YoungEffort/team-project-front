@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import { Form, Icon, Input, Button  } from 'antd'
 const FormItem = Form.Item
-class Login extends Component {
+class LoginFrom extends Component {
    componentDidMount () {
       document.title  = '登录'
    }
    render () {
-      const { getFieldDecorator } = this.props
+      const { form, enterKeySubmit, commonSubmit } = this.props
+      const { getFieldDecorator } = form
       return (
-         <>
+         <Form onSubmit = { (e) => commonSubmit(e,form) }>
             <FormItem>
                { getFieldDecorator('loginName', {
                   rules: [ 
@@ -33,14 +34,16 @@ class Login extends Component {
                      prefix = { <Icon type = 'lock' style = { { color: 'rgba(0,0,0,.25)' } } /> }
                      type = 'password'
                      placeholder = '请输入登录密码'
+                     onKeyPress = { (e) => enterKeySubmit (e,form) }
                   />
                ) }
             </FormItem>
             <FormItem className = 'form-submit'>
                <Button type = 'primary' htmlType = 'submit'>登&nbsp;&nbsp;&nbsp;录</Button>
             </FormItem>
-         </>
+         </Form>
       )
    }
 }
+const Login = Form.create({ name: 'login-from' })(LoginFrom)
 export default Login
