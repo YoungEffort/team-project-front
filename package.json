@@ -10,12 +10,14 @@
     "pro": "cross-env PROCESS_ENV=production webpack --config webpack.build.config.js",
     "build": "webpack --config webpack.build.config.js",
     "dll": "webpack --config webpack.dll.config.js",
-    "lint": "./node_modules/.bin/eslint ./src",
-    "lintfix": "./node_modules/.bin/eslint ./src --fix"
+    "lint": "eslint --ext .jsx,.js src/  --fix ./src --cache",
+    "lint-staged": "lint-staged"
   },
-  "pre-commit": [
-    "lint"
-  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-staged"
+    }
+  },
   "lint-staged": {
     "linters": {
       "*.js": [
@@ -65,6 +67,7 @@
     "friendly-errors-webpack-plugin": "^1.7.0",
     "happypack": "^5.0.1",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^3.0.4",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
     "mini-css-extract-plugin": "^0.8.0",
