@@ -22,8 +22,8 @@ class ItemBoard extends Component {
          addCompileData: {
             pid: '', // 项目id
             img: '', // 项目预览图片
-            p_name: '', // 项目名称
-            login_name: '', // 开发人员
+            pName: '', // 项目名称
+            loginName: '', // 开发人员
             description: '' // 项目描述
          },
          // 判断是编辑还是新增
@@ -66,8 +66,8 @@ class ItemBoard extends Component {
          addCompileData = {
             pid: '', // 项目id
             img: '', // 项目预览图片
-            p_name: '', // 项目名称
-            login_name: '', // 开发人员
+            pName: '', // 项目名称
+            loginName: '', // 开发人员
             description: '' // 项目描述
          },
          form.resetFields()
@@ -205,8 +205,8 @@ class ItemBoard extends Component {
                               </Tooltip>
                            ] }
                         >
-                           <p className = 'card-text leave_out cl-0'>项目名称：{ item.p_name }</p>
-                           <p className = 'card-text leave_out cl-1'>开发人员：{ item.login_name }</p>
+                           <p className = 'card-text leave_out cl-0'>项目名称：{ item.pName }</p>
+                           <p className = 'card-text leave_out cl-1'>开发人员：{ item.loginName }</p>
                            <p className = 'card-text leave_out cl-2'>项目介绍：{ item.description }</p>
                         </Card>
                      ) 
