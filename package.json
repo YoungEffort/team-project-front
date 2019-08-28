@@ -11,7 +11,8 @@
     "build": "webpack --config webpack.build.config.js",
     "dll": "webpack --config webpack.dll.config.js",
     "lint": "eslint --fix src/**/*.{js,jsx}",
-    "fix": "prettier --write src/**/*.{js,jsx}"
+    "fix": "prettier --write src/**/*.{js,jsx}",
+    "lint:style": "stylelint --fix src/**/*.{css,less}"
   },
   "pre-commit": ["lint"],
   "keywords": [],

@@ -11,7 +11,7 @@ import AddCompileItem from './component/addCompileItem' // 新增
 import { clearTrim } from '@/utils/reg'
 import {
    querylist,
-   // deleteProject,
+   deleteProject,
    addProject,
    compileProject
 } from '@/api/itemBoard'
@@ -26,7 +26,7 @@ class ItemBoard extends Component {
             pid: '', // 项目id
             img: '', // 项目预览图片
             pName: '', // 项目名称
-            loginName: '', // 开发人员
+            developer: '', // 开发人员
             description: '' // 项目描述
          },
          // 判断是编辑还是新增
@@ -58,29 +58,28 @@ class ItemBoard extends Component {
            });
         }
      });
-  };
-
+  }
   // 新增和编辑--弹窗显示隐藏
   modalShowHide = form => {
      let { addMoadlVisible, addCompileData } = this.state;
      if (addMoadlVisible) {
-        addMoadlVisible = false;
-        (addCompileData = {
+        addMoadlVisible = false
+        addCompileData = {
            pid: '', // 项目id
            img: '', // 项目预览图片
            pName: '', // 项目名称
-           loginName: '', // 开发人员
+           developer: '', // 开发人员
            description: '' // 项目描述
-        }),
-        form.resetFields();
+        }
+        form.resetFields()
      } else {
-        addMoadlVisible = true;
+        addMoadlVisible = true
      }
      this.setState({
         addMoadlVisible,
         addCompileData
      });
-  };
+  }
   // 新增和编辑--弹窗确定
   modalConfirm = (e, form) => {
      e.preventDefault();
@@ -93,7 +92,7 @@ class ItemBoard extends Component {
               : this.compileItemPost(values, form);
         }
      });
-  };
+  }
   // 点击新增按钮 显示弹窗
   addItem = () => {
      this.setState(
@@ -104,20 +103,21 @@ class ItemBoard extends Component {
            this.modalShowHide();
         }
      );
-  };
+  }
   // 新增--项目--提交
   addItemPost = (values, form) => {
      addProject({
         pName: values.pName,
+        developer: values.developer,
         description: values.description
      }).then(res => {
         if (parseFloat(res.code) === 200) {
-           console.log(res);
-           message.success('新增成功');
-           this.modalShowHide(form);
+           message.success('新增成功')
+           this.modalShowHide(form)
+           this.initView()
         }
      });
-  };
+  }
   // 编辑--项目 数据获取
   compileItem = item => {
      console.log(item);
@@ -134,34 +134,35 @@ class ItemBoard extends Component {
            this.modalShowHide();
         }
      );
-  };
+  }
   // 编辑--项目--提交
   compileItemPost = (values, form) => {
-     console.log(values);
-     compileProject;
      compileProject({
-        pName: values.pName,
-        description: values.description
+        pid: this.state.addCompileData.pid,
+        ...values
      }).then(res => {
         if (parseFloat(res.code) === 200) {
-           console.log(res);
-           message.success('编辑成功');
-           this.modalShowHide(form);
+           message.success('编辑成功')
+           this.modalShowHide(form)
+           this.initView()
+            
         }
      });
-  };
+  }
   // 删除指定项目
   deletItem = item => {
      console.log('删除的数据', item.pid);
-     // deleteProject({
-     //    id
-     // })
-     //    .then((res) => {
-     //       if (parseFloat(res.code) === 200) {
-     //          console.log(res)
-     //       }
-     //    })
-  };
+     deleteProject({
+        id: item.pid
+     })
+        .then((res) => {
+           if (parseFloat(res.code) === 200) {
+              console.log(res)
+              message.success('删除项目成功')
+              this.initView()
+           }
+        })
+  }
   render () {
      let {
         popconfirmInit,
@@ -215,13 +216,13 @@ class ItemBoard extends Component {
                        ] }
                     >
                        <p className = 'card-text leave_out cl-0'>
-                  项目名称：{ item.pName }
+                           项目名称：{ item.pName }
                        </p>
                        <p className = 'card-text leave_out cl-1'>
-                  开发人员：{ item.loginName }
+                           开发人员：{ item.developer }
                        </p>
                        <p className = 'card-text leave_out cl-2'>
-                  项目介绍：{ item.description }
+                           项目介绍：{ item.description }
                        </p>
                     </Card>
                  );
