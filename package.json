@@ -10,8 +10,12 @@
     "pro": "cross-env PROCESS_ENV=production webpack --config webpack.build.config.js",
     "build": "webpack --config webpack.build.config.js",
     "dll": "webpack --config webpack.dll.config.js",
-    "lint": "eslint --ext .jsx,.js src/  --fix ./src --cache"
+    "lint": "./node_modules/.bin/eslint ./src",
+    "lintfix": "./node_modules/.bin/eslint ./src --fix"
   },
+  "pre-commit": [
+    "lint"
+  ],
   "lint-staged": {
     "linters": {
       "*.js": [

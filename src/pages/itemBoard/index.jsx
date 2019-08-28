@@ -4,7 +4,7 @@
    2019-08-26
 */
 import React, { Component } from 'react'
-import { Tooltip, Card, Icon, Row, Col, Button } from 'antd'
+import { Tooltip, Card, Icon, Row, Button } from 'antd'
 import './style.less'
 import ItemSearch from './component/search' // 查询
 import AddCompileItem from './component/addCompileItem' // 新增
