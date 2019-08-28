@@ -5,7 +5,4 @@
 */
 
 import { newHome, asyncHome } from './home';
-export {
-   newHome,
-   asyncHome
-};
+export { newHome, asyncHome };

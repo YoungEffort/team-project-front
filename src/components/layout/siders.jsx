@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import { Layout, Menu, Icon  } from 'antd'
-const { Sider } = Layout
-const { SubMenu } = Menu
-const MenuItem = Menu.Item 
-import RouterConfig from '@/routers/routerConfig' 
+import React, { Component } from 'react';
+import { Layout, Menu, Icon } from 'antd';
+const { Sider } = Layout;
+const { SubMenu } = Menu;
+const MenuItem = Menu.Item;
+import RouterConfig from '@/routers/routerConfig';
 class Siders extends Component {
    constructor (props) {
-      super(props)
+      super(props);
       this.state = {
          routerConfig: JSON.parse(JSON.stringify(RouterConfig)),
          // sider配置
@@ -18,12 +18,12 @@ class Siders extends Component {
          menuData: {
             mode: 'inline'
          }
-      }
+      };
    }
    // 递归循环添加子菜单
    recursionMenu (data) {
-      return data.map (( items ) => {
-         if (items.children && items.children.length >0) {
+      return data.map(items => {
+         if (items.children && items.children.length > 0) {
             return (
                <SubMenu
                   key = { items.key }
@@ -33,33 +33,39 @@ class Siders extends Component {
                         <span>{ items.title }</span>
                      </span>
                   }
-               >  
-                  {
-                     this.recursionMenu(items.children)
-                  }
+               >
+                  { this.recursionMenu(items.children) }
                </SubMenu>
-            )
+            );
          }
-         return  (
-            <MenuItem key = { items.key }> 
+         return (
+            <MenuItem key = { items.key }>
                { items.icon ? <Icon type = { items.icon } /> : '' }
                <span> { items.title }</span>
-            </MenuItem>  
-         )
-      })
+            </MenuItem>
+         );
+      });
    }
    render () {
-      let { siderData, menuData, routerConfig } = this.state
-      let { collapsed, siderMenu, siderSubMenu, openKeys, selectedKeys, siderMenuOnSelect } = this.props
+      let { siderData, menuData, routerConfig } = this.state;
+      let {
+         collapsed,
+         siderMenu,
+         siderSubMenu,
+         openKeys,
+         selectedKeys,
+         siderMenuOnSelect
+      } = this.props;
       return (
-         <Sider
-            { ...siderData }
-            collapsed = { collapsed }
-         >
+         <Sider { ...siderData } collapsed = { collapsed }>
             <div className = 'layout-logo-content'>
-               <img  src = { require('../../assets/images/cylogo.png') }  alt = '' className = 'layout-logo' />
+               <img
+                  src = { require('../../assets/images/cylogo.png') }
+                  alt = ''
+                  className = 'layout-logo'
+               />
             </div>
-            <Menu 
+            <Menu
                { ...menuData }
                openKeys = { openKeys }
                selectedKeys = { selectedKeys }
@@ -67,13 +73,10 @@ class Siders extends Component {
                onClick = { siderSubMenu }
                onSelect = { siderMenuOnSelect }
             >
-               {
-                  this.recursionMenu(routerConfig)
-               }
+               { this.recursionMenu(routerConfig) }
             </Menu>
          </Sider>
-        
-      )
+      );
    }
 }
-export default Siders
+export default Siders;

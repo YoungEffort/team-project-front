@@ -7,6 +7,9 @@ module.exports = {
    root: true,
    extends: ["eslint:recommended","plugin:react/recommended"],
    parser: "babel-eslint",
+   plugins: [
+      "prettier"
+  ],
    env: {
       browser: true, // 开发环境配置表示可以使用浏览器的方法
       node: true, //
@@ -34,6 +37,7 @@ module.exports = {
       ]
    },
    rules: {
+     // "prettier/prettier": "error",
     // 自定义的规则 warn error
       "indent": ['error', 3],                                           // 强制使用一致的缩进
       'space-before-function-paren': 1,                                 // 在函数左括号的前面是否有空格

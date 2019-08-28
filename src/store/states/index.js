@@ -3,8 +3,6 @@
    秦国胜
    2019-08-12
 */
-import homeData from './homeData';
+import homeData from "./homeData";
 
-export {
-   homeData
-};
+export { homeData };

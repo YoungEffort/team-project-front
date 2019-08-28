@@ -19,5 +19,3 @@ export function asyncHome (data) {
       data
    };
 }
-
-

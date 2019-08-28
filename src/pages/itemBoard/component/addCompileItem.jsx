@@ -1,29 +1,29 @@
 // 新增项目 编辑项目
-import React, { Component } from 'react'
-import { Form, Input, Modal } from 'antd'
-const FormItem = Form.Item
-const { TextArea } = Input
+import React, { Component } from 'react';
+import { Form, Input, Modal } from 'antd';
+const FormItem = Form.Item;
+const { TextArea } = Input;
 class AddCompileItemFom extends Component {
    constructor (props) {
-      super(props)
+      super(props);
       this.state = {
          modalInit: {
             title: '添加项目',
             width: 450,
             wrapClassName: 'add-itme-board-modal'
          }
-      }
+      };
    }
    render () {
-      let { modalInit } = this.state
-      let { addMoadlVisible, form, modalShowHide, modalConfirm } = this.props
-      const { getFieldDecorator } = form
+      let { modalInit } = this.state;
+      let { addMoadlVisible, form, modalShowHide, modalConfirm } = this.props;
+      const { getFieldDecorator } = form;
       return (
          <Modal
             { ...modalInit }
             visible = { addMoadlVisible }
-            onOk = { (e) => modalConfirm(e,form) }
-            onCancel = { () => modalShowHide( form ) }
+            onOk = { e => modalConfirm(e, form) }
+            onCancel = { () => modalShowHide(form) }
          >
             <Form layout = 'inline'>
                <FormItem label = '项目名称'>
@@ -32,15 +32,11 @@ class AddCompileItemFom extends Component {
                         { required: true, message: '请输入项目名称' },
                         { whitespace: true, message: '不能输入空格' }
                      ]
-                  })(
-                     <Input
-                        placeholder = '请输入项目名称'
-                     />
-                  ) }
+                  })(<Input placeholder = '请输入项目名称' />) }
                </FormItem>
                <FormItem label = '开发人员'>
                   { getFieldDecorator('loginName', {
-                     rules: [ 
+                     rules: [
                         { required: true, message: '请输入开发人员' },
                         { whitespace: true, message: '不能输入空格' }
                      ]
@@ -76,7 +72,7 @@ class AddCompileItemFom extends Component {
                </FormItem> */ }
             </Form>
          </Modal>
-      )
+      );
    }
 }
 
@@ -98,5 +94,5 @@ const AddCompileItem = Form.create({
          })
       };
    }
-})(AddCompileItemFom)
-export default  AddCompileItem
+})(AddCompileItemFom);
+export default AddCompileItem;

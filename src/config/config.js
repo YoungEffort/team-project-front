@@ -20,4 +20,4 @@ module.exports = {
       TITLE: '',
       BASE_URL: 'https://api.cartechfin.com/'
    }
-}
+};

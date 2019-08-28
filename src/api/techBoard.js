@@ -1,4 +1,4 @@
-import axios from '@/utils/http.js'
+import axios from '@/utils/http.js';
 // import { BXFQ } from '@/api/server'
 
 export const getTechstack = params => {
@@ -6,5 +6,5 @@ export const getTechstack = params => {
       url: '/api/get/techstack/querylist',
       method: 'get',
       params
-   })
-}
+   });
+};
