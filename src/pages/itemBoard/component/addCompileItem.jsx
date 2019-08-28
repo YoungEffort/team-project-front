@@ -27,7 +27,7 @@ class AddCompileItemFom extends Component {
          >
             <Form layout = 'inline'>
                <FormItem label = '项目名称'>
-                  { getFieldDecorator('p_name', {
+                  { getFieldDecorator('pName', {
                      rules: [
                         { required: true, message: '请输入项目名称' },
                         { whitespace: true, message: '不能输入空格' }
@@ -39,7 +39,7 @@ class AddCompileItemFom extends Component {
                   ) }
                </FormItem>
                <FormItem label = '开发人员'>
-                  { getFieldDecorator('login_name', {
+                  { getFieldDecorator('loginName', {
                      rules: [ 
                         { required: true, message: '请输入开发人员' },
                         { whitespace: true, message: '不能输入空格' }
@@ -84,13 +84,13 @@ const AddCompileItem = Form.create({
    name: 'add-compile-from',
    mapPropsToFields (props) {
       return {
-         p_name: Form.createFormField({
+         pName: Form.createFormField({
             ...props.addCompileData,
-            value: props.addCompileData.p_name
+            value: props.addCompileData.pName
          }),
-         login_name: Form.createFormField({
+         loginName: Form.createFormField({
             ...props.addCompileData,
-            value: props.addCompileData.login_name
+            value: props.addCompileData.loginName
          }),
          description: Form.createFormField({
             ...props.addCompileData,
