@@ -3,19 +3,19 @@
 */
 import { HOME, NEWHOME } from '../actions/actionTypes';
 import { homeData } from '../states/index';
-const Home =  function (state = homeData, action){
+const Home = function (state = homeData, action) {
    switch (action.type) {
-   case HOME :
+   case HOME:
       return {
          ...state,
          ...action.data
-      }
-   case NEWHOME :
+      };
+   case NEWHOME:
       return {
          ...state,
          ...action.data
-      }
-   default :
+      };
+   default:
       return state;
    }
 };

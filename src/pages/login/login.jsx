@@ -1,17 +1,18 @@
-import React, { Component } from 'react'
-import { Form, Icon, Input, Button  } from 'antd'
-const FormItem = Form.Item
-class Login extends Component {
+import React, { Component } from 'react';
+import { Form, Icon, Input, Button } from 'antd';
+const FormItem = Form.Item;
+class LoginFrom extends Component {
    componentDidMount () {
-      document.title  = '登录'
+      document.title = '登录';
    }
    render () {
-      const { getFieldDecorator } = this.props
+      const { form, enterKeySubmit, commonSubmit } = this.props;
+      const { getFieldDecorator } = form;
       return (
-         <>
+         <Form onSubmit = { e => commonSubmit(e, form) }>
             <FormItem>
                { getFieldDecorator('loginName', {
-                  rules: [ 
+                  rules: [
                      { required: true, message: '请输入用户名!' },
                      { whitespace: true, message: '不能输入空格' }
                   ]
@@ -24,7 +25,7 @@ class Login extends Component {
             </FormItem>
             <FormItem>
                { getFieldDecorator('password', {
-                  rules: [ 
+                  rules: [
                      { required: true, message: '请输入登录密码!' },
                      { whitespace: true, message: '不能输入空格' }
                   ]
@@ -33,14 +34,18 @@ class Login extends Component {
                      prefix = { <Icon type = 'lock' style = { { color: 'rgba(0,0,0,.25)' } } /> }
                      type = 'password'
                      placeholder = '请输入登录密码'
+                     onKeyPress = { e => enterKeySubmit(e, form) }
                   />
                ) }
             </FormItem>
             <FormItem className = 'form-submit'>
-               <Button type = 'primary' htmlType = 'submit'>登&nbsp;&nbsp;&nbsp;录</Button>
+               <Button type = 'primary' htmlType = 'submit'>
+            登&nbsp;&nbsp;&nbsp;录
+               </Button>
             </FormItem>
-         </>
-      )
+         </Form>
+      );
    }
 }
-export default Login
+const Login = Form.create({ name: 'login-from' })(LoginFrom);
+export default Login;

@@ -5,10 +5,10 @@
 */
 
 import Loadable from 'react-loadable';
-import { Loading } from '@/components/index';  
-export default (loader,loading = Loading) => {
+import { Loading } from '@/components/index';
+export default (loader, loading = Loading) => {
    return Loadable({
       loader,
       loading
    });
-}
+};

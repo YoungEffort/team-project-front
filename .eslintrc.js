@@ -3,10 +3,22 @@
    秦国胜
    2019-08-05
 */
+  // "husky": {
+  //   "hooks": {
+  //     "pre-commit": "npm run lint-staged"
+  //   }
+  // },
+  // "lint-staged": {
+  //   "src/**/*.js": "eslint --ext .js",
+  //   "src/**/*.jsx": "eslint --ext .jsx"
+  // },
 module.exports = {
    root: true,
    extends: ["eslint:recommended","plugin:react/recommended"],
    parser: "babel-eslint",
+//    plugins: [
+//       "prettier"
+//   ],
    env: {
       browser: true, // 开发环境配置表示可以使用浏览器的方法
       node: true, //
@@ -34,6 +46,7 @@ module.exports = {
       ]
    },
    rules: {
+     // "prettier/prettier": "error",
     // 自定义的规则 warn error
       "indent": ['error', 3],                                           // 强制使用一致的缩进
       'space-before-function-paren': 1,                                 // 在函数左括号的前面是否有空格
@@ -76,6 +89,7 @@ module.exports = {
       "no-useless-rename": 2,                                           // 禁止重复模块导入
       "no-var": 2,                                                      // 要求使用 let 或 const 而不是 var
       "no-delete-var": 2,                                               // 不能对var声明的变量使用delete操作符
+      "no-extra-boolean-cast": 0,                                       // 禁止不必要的bool转换  
       /*
              *********** react ***********
       */
@@ -108,9 +122,9 @@ module.exports = {
       "react/prop-types": 0,                                            // 防止在React组件定义中丢失props验证 props定义关闭
       "react/react-in-jsx-scope": 2,                                    // 使用JSX时防止丢失React
       "react/self-closing-comp": 1,                                     // 防止没有children的组件的额外结束标签
-      "no-extra-boolean-cast": 0,                                       // 禁止不必要的bool转换
       "react/no-array-index-key": 0,                                    // 防止在数组中遍历中使用数组key做索引
-      "react/no-deprecated": 1                                          // 不使用弃用的方法
+      "react/no-deprecated": 1,                                          // 不使用弃用的方法
+      "react/no-string-refs": 2                                          // 不使用弃用的方法
     },
     // 全局变量配置
    globals:{

@@ -6,8 +6,8 @@ import './style.less'
 class techBoard extends Component {
    constructor (props) {
       super(props);
-      this.state = { 
-         data:[]
+      this.state = {
+         data: []
       };
    }
    componentDidMount () {
@@ -17,10 +17,10 @@ class techBoard extends Component {
       let params = { }
       getTechstack(params).then(res => {
          if (res.code === '200') {
-            console.log(res.data)
-            this.setState({ data:res.data })
+            console.log(res.data);
+            this.setState({ data: res.data });
          }
-      })
+      });
    }
    handleDelete= (id) => {
       let params={ id:id }
@@ -49,7 +49,7 @@ class techBoard extends Component {
                         </p>
                      </Card>
                   </Col>
-               ) }
+               )) }
             </Row>
          </div>
       );
