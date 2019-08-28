@@ -12,6 +12,7 @@ import { clearTrim } from '@/utils/reg'
 import { querylist, deleteProject, addProject, compileProject } from '@/api/itemBoard'
 let aa = ''
 let dd = ''
+let ss = ''
 class ItemBoard extends Component {
    constructor (props) {
       super (props)
