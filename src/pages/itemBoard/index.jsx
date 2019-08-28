@@ -3,21 +3,20 @@
    秦国胜
    2019-08-26
 */
-import React, { Component } from 'react';
-import { Tooltip, Card, Icon, Button, message, Popconfirm } from 'antd';
-import './style.less';
-import ItemSearch from './component/search'; // 查询
-import AddCompileItem from './component/addCompileItem'; // 新增
-import { clearTrim } from '@/utils/reg';
+import React, { Component } from 'react'
+import { Tooltip, Card, Icon, Button, message, Popconfirm } from 'antd'
+import './style.less'
+import ItemSearch from './component/search' // 查询
+import AddCompileItem from './component/addCompileItem' // 新增
+import { clearTrim } from '@/utils/reg'
 import {
    querylist,
    deleteProject,
    addProject,
    compileProject
-} from '@/api/itemBoard';
-let aa = '';
-let dd = '';
-let bbb = '';
+} from '@/api/itemBoard'
+let aa = ''
+let dd = ''
 class ItemBoard extends Component {
    constructor (props) {
       super(props);

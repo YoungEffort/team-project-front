@@ -15,13 +15,15 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-add": "lint-staged",
+      "pre-push": "lint-staged"
     }
   },
   "lint-staged": {
-    "src/**/*.{js,jsx}": [
-      "eslint --fix",
-      "git add"
+    "src/**/*.{jsx,js}": [
+      "eslint --fix", 
+      "git add" 
     ]
   },
   "keywords": [],

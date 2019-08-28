@@ -7,9 +7,9 @@ module.exports = {
    root: true,
    extends: ["eslint:recommended","plugin:react/recommended"],
    parser: "babel-eslint",
-   plugins: [
-      "prettier"
-  ],
+//    plugins: [
+//       "prettier"
+//   ],
    env: {
       browser: true, // 开发环境配置表示可以使用浏览器的方法
       node: true, //
