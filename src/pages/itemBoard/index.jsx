@@ -11,7 +11,7 @@ import AddCompileItem from './component/addCompileItem' // 新增
 import { clearTrim } from '@/utils/reg'
 import {
    querylist,
-   deleteProject,
+   // deleteProject,
    addProject,
    compileProject
 } from '@/api/itemBoard'

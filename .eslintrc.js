@@ -3,6 +3,15 @@
    秦国胜
    2019-08-05
 */
+  // "husky": {
+  //   "hooks": {
+  //     "pre-commit": "npm run lint-staged"
+  //   }
+  // },
+  // "lint-staged": {
+  //   "src/**/*.js": "eslint --ext .js",
+  //   "src/**/*.jsx": "eslint --ext .jsx"
+  // },
 module.exports = {
    root: true,
    extends: ["eslint:recommended","plugin:react/recommended"],
