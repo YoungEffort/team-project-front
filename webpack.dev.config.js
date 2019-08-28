@@ -37,7 +37,7 @@ module.exports=merge(
             // 运行成功
             compilationSuccessInfo: {
                message: 'http://localhost:9999/',
-               notes: [ '65465464' ]
+               notes: [ 'http://localhost:9999/' ]
             }
          }) 
       ],

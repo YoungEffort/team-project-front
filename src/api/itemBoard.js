@@ -24,3 +24,11 @@ export const addProject = params => {
       data: params
    })
 }
+// 编辑
+export const compileProject = params => {
+   return axios.request({
+      url: '/api/project/addProject',
+      method: 'post',
+      data: params
+   })
+}

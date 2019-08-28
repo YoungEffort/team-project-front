@@ -4,12 +4,12 @@
    2019-08-26
 */
 import React, { Component } from 'react'
-import { Tooltip, Card, Icon, Button } from 'antd'
+import { Tooltip, Card, Icon, Button, message, Popconfirm  } from 'antd'
 import './style.less'
 import ItemSearch from './component/search' // 查询
 import AddCompileItem from './component/addCompileItem' // 新增
 import { clearTrim } from '@/utils/reg'
-import { querylist, deleteProject, addProject } from '@/api/itemBoard'
+import { querylist, deleteProject, addProject, compileProject } from '@/api/itemBoard'
 class ItemBoard extends Component {
    constructor (props) {
       super (props)
@@ -23,6 +23,12 @@ class ItemBoard extends Component {
             p_name: '', // 项目名称
             login_name: '', // 开发人员
             description: '' // 项目描述
+         },
+         // 判断是编辑还是新增
+         isAddCompile: 0, // 0 新增 1 编辑
+         popconfirmInit: {
+            placement: 'top',
+            title: '是否缺确认删除'
          },
          // 卡片数据
          cardData: [
@@ -49,19 +55,9 @@ class ItemBoard extends Component {
             }
          })
    }
-   // 删除指定项目
-   deletItem = (id) => {
-      deleteProject({
-         id
-      })
-         .then((res) => {
-            if (parseFloat(res.code) === 200) {
-               console.log(res)
-            }
-         })
-   }
-   // 新增--弹窗显示隐藏
-   addModalShowHide = (form) => {
+   
+   // 新增和编辑--弹窗显示隐藏
+   modalShowHide = ( form ) => {
       let { addMoadlVisible, addCompileData } = this.state
       if (addMoadlVisible) {
          addMoadlVisible = false
@@ -81,18 +77,30 @@ class ItemBoard extends Component {
          addCompileData
       })
    }
-   // 新增--弹窗确定
-   addModalConfirm = (e,form) => {
-      e.preventDefault();
+   // 新增和编辑--弹窗确定
+   modalConfirm = (e,form) => {
+      e.preventDefault()
+      let { isAddCompile } = this.state
       form.validateFields((err, values) => {
          if (!err) {
             values = clearTrim(values)
-            this.addItem(values,form)
+            isAddCompile === 0 ? 
+               this.addItemPost(values,form)
+               :
+               this.compileItemPost(values,form)
          }
       });
    }
-   // 新增--项目
-   addItem = (values, form) => {
+   // 点击新增按钮 显示弹窗
+   addItem = () => {
+      this.setState({
+         isAddCompile: 0
+      }, () => {
+         this.modalShowHide()
+      })
+   }
+   // 新增--项目--提交
+   addItemPost = (values, form) => {
       addProject({
          pName: values.pName,
          description: values.description
@@ -100,24 +108,57 @@ class ItemBoard extends Component {
          .then((res) => {
             if (parseFloat(res.code) === 200) {
                console.log(res)
-               this.addModalShowHide(form)
+               message.success('新增成功')
+               this.modalShowHide(form)
             }
          })
    }
-   // 编辑--项目
+   // 编辑--项目 数据获取
    compileItem = (item) => {
       console.log(item)
       let _this = this
       this.setState ({
+         isAddCompile: 1,
          addCompileData: {
             ... _this.state.addCompileData,
             ...item
          }
+      },() => {
+         this.modalShowHide()
       })
-      this.addModalShowHide()
+      
+   }
+   // 编辑--项目--提交
+   compileItemPost = (values,form) => {
+      console.log(values)
+      compileProject
+      compileProject({
+         pName: values.pName,
+         description: values.description
+      })
+         .then((res) => {
+            if (parseFloat(res.code) === 200) {
+               console.log(res)
+               message.success('编辑成功')
+               this.modalShowHide(form)
+            }
+         })
+   }
+   // 删除指定项目
+   deletItem = (item) => {
+      console.log('删除的数据', item.pid)
+      // deleteProject({
+      //    id
+      // })
+      //    .then((res) => {
+      //       if (parseFloat(res.code) === 200) {
+      //          console.log(res)
+      //       }
+      //    })
    }
    render () {
       let {
+         popconfirmInit,
          addMoadlVisible,
          addCompileData,
          cardData 
@@ -126,7 +167,7 @@ class ItemBoard extends Component {
          <div className = 'item-board'>
             <ItemSearch />
             <div className = 'item-add'>
-               <Button icon = 'plus' onClick = { this.addModalShowHide }>新增</Button>
+               <Button icon = 'plus' onClick = { this.addItem }>新增</Button>
             </div>
             <div className = 'item-board-card'>
                {
@@ -151,8 +192,11 @@ class ItemBoard extends Component {
                               >
                                  <Icon type = 'edit' />
                               </Tooltip>,
+                             
                               <Tooltip key = 'delete' title = '删除'>
-                                 <Icon type = 'delete' />
+                                 <Popconfirm { ...popconfirmInit } onConfirm = { () => this.deletItem(item) }>
+                                    <Icon type = 'delete' />
+                                 </Popconfirm>
                               </Tooltip>,
                               <Tooltip key = 'ellipsis' title = '详情'>
                                  <Icon type = 'ellipsis' />
@@ -170,8 +214,8 @@ class ItemBoard extends Component {
             <AddCompileItem
                addCompileData = { addCompileData }
                addMoadlVisible = { addMoadlVisible }
-               addModalShowHide = { this.addModalShowHide }
-               addModalConfirm = { this.addModalConfirm }
+               modalShowHide = { this.modalShowHide }
+               modalConfirm = { this.modalConfirm }
             />
          </div>
       )

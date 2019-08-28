@@ -16,14 +16,14 @@ class AddCompileItemFom extends Component {
    }
    render () {
       let { modalInit } = this.state
-      let { addMoadlVisible, form, addModalShowHide, addModalConfirm } = this.props
+      let { addMoadlVisible, form, modalShowHide, modalConfirm } = this.props
       const { getFieldDecorator } = form
       return (
          <Modal
             { ...modalInit }
             visible = { addMoadlVisible }
-            onOk = { (e) => addModalConfirm(e,form) }
-            onCancel = { () => addModalShowHide(form) }
+            onOk = { (e) => modalConfirm(e,form) }
+            onCancel = { () => modalShowHide( form ) }
          >
             <Form layout = 'inline'>
                <FormItem label = '项目名称'>
@@ -65,7 +65,7 @@ class AddCompileItemFom extends Component {
                      />
                   ) }
                </FormItem>
-               <FormItem label = '项目图片'>
+               { /* <FormItem label = '项目图片'>
                   { getFieldDecorator('upImg', {
                      rules: [
                         { required: true, message: '请上传项目图片!' }
@@ -73,7 +73,7 @@ class AddCompileItemFom extends Component {
                   })(
                      <div>111</div>
                   ) }
-               </FormItem>
+               </FormItem> */ }
             </Form>
          </Modal>
       )
