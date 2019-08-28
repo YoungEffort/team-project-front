@@ -49,7 +49,7 @@ class techBoard extends Component {
                         </p>
                      </Card>
                   </Col>
-               )) }
+               ) }
             </Row>
          </div>
       );
