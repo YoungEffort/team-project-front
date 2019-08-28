@@ -17,6 +17,7 @@ import {
 } from '@/api/itemBoard';
 let aa = '';
 let dd = '';
+let bbb = '';
 class ItemBoard extends Component {
    constructor (props) {
       super(props);
