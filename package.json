@@ -18,14 +18,8 @@
     }
   },
   "lint-staged": {
-    "src/**/*.js": [
-      "eslint --fix --ext .js --cache",
-      "git add"
-    ],
-    "src/**/*.jsx": [
-      "eslint --fix --ext .jsx --cache",
-      "git add"
-    ]
+    "**/*.js": "eslint --ext .js src/ --cache",
+    "**/*.jsx": "eslint --ext .jsx src/ --cache"
   },
   "keywords": [],
   "author": "",
