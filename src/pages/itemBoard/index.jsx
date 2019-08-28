@@ -16,7 +16,6 @@ import {
    compileProject
 } from '@/api/itemBoard'
 let aa = ''
-let dd = ''
 class ItemBoard extends Component {
    constructor (props) {
       super(props);
