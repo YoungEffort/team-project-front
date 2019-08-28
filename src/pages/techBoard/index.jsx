@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Row, Col, Card } from 'antd';
-import { getTechstack } from '@/api/techBoard';
-import './style.less';
+import { Row, Col, Card, Icon  } from 'antd';
+import { getTechstack,deleteTechstack } from '@/api/techBoard';
+import './style.less'
 
 class techBoard extends Component {
    constructor (props) {
@@ -11,7 +11,10 @@ class techBoard extends Component {
       };
    }
    componentDidMount () {
-      let params = {};
+      this.handleGetTechstack()
+   }
+   handleGetTechstack (){
+      let params = { }
       getTechstack(params).then(res => {
          if (res.code === '200') {
             console.log(res.data);
@@ -19,19 +22,34 @@ class techBoard extends Component {
          }
       });
    }
+   handleDelete= (id) => {
+      let params={ id:id }
+      deleteTechstack(params).then(res => {
+         if (res.code === '200') {
+            this.handleGetTechstack()
+            console.log(res.data)
+         }
+      })
+   }
    render () {
       return (
          <div className = 'tech-board'>
             <Row gutter = { 16 }>
-               { this.state.data.map((item, i) => (
-                  <Col span = { 3 } key = { i } className = 'mrb-10'>
-                     <Card style = { { width: 200 } } hoverable>
+               { this.state.data.map((item,i) => 
+                  <Col span = { 4 } key = { i } className = 'mrb-10'>
+                     <Card style = { { width: '97%' } } hoverable>
                         <h3 className = 'mrb-5'>技术栈：{ item.tech }</h3>
                         <p className = 'mrb-5 cl1'>负责人：{ item.principal }</p>
-                        <p className = 'cl2'>状态：{ item.state }...</p>
+                        <p className = 'mrb-5'>
+                           <span className = 'cl2'>状态：{ item.state }...</span> 
+                           <span className = 'card-footer right'>
+                              <Icon type = 'edit' className = 'mrr-10' />
+                              <Icon type = 'delete'  onClick = { () => this.handleDelete(item.id) } />
+                           </span>
+                        </p>
                      </Card>
                   </Col>
-               )) }
+               ) }
             </Row>
          </div>
       );

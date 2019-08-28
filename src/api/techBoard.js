@@ -6,5 +6,13 @@ export const getTechstack = params => {
       url: '/api/get/techstack/querylist',
       method: 'get',
       params
-   });
-};
+   })
+}
+
+export const deleteTechstack = params => {
+   return axios.request({
+      url: '/api/techstack/deleteTech',
+      method: 'post',
+      data:params
+   })
+}
