@@ -22,7 +22,7 @@
       "eslint --fix --ext .js --cache",
       "git add"
     ],
-    "src/**/*.jxs": [
+    "src/**/*.jsx": [
       "eslint --fix --ext .jsx --cache",
       "git add"
     ]
