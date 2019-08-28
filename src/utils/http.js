@@ -5,9 +5,12 @@
  */
 import { notification } from 'antd';
 import Axios from 'axios';
+import { HashRouter } from 'react-router-dom';
 import { getToken } from '@/utils/utils';
 import config from '@/config/config';
 import { isLocalDev } from '@/api/server';
+
+const router = new HashRouter()
 
 // 接口token 白名单
 const whiteList = [ '/api/user/login', '/api/user/register', '/api/user/forget' ];
@@ -44,6 +47,11 @@ Axios.interceptors.request.use(
 // 响应拦截
 Axios.interceptors.response.use(
    response => {
+      console.log(response.status,router.history)
+      if (response.status === 401) {
+         window.sessionStorage.removeItem('user_info')
+         router.history.push('/login')
+      }
       let { data } = response;
       if (data.code == '200') {
          return data;
