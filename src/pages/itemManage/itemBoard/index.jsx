@@ -231,7 +231,7 @@ class ItemBoard extends Component {
                           <Tooltip
                              key = 'edit'
                              title = '编辑'
-                             getPopupContainer = { () => document.querySelector('.item-board-card .item-cards-' + index) }
+                             getPopupContainer = { () => document.querySelector('.item-board-card .item-cards-' + index + ' .ant-card-actions') }
                              onClick = { (e) => {
                                 this.compileItem(e,item);
                              } }
@@ -240,18 +240,18 @@ class ItemBoard extends Component {
                           </Tooltip>,
 
                           <Tooltip key = 'delete' title = '删除'
-                             getPopupContainer = { () => document.querySelector('.item-board-card .item-cards-' + index) }
+                             getPopupContainer = { () => document.querySelector('.item-board-card .item-cards-' + index + ' .ant-card-actions') }
                           >
                              <Popconfirm
                                 { ...popconfirmInit }
-                                getPopupContainer = { () => document.querySelector('.item-board-card .item-cards-' + index) }
+                                getPopupContainer = { () => document.querySelector('.item-board-card .item-cards-' + index + ' .ant-card-actions') }
                                 onConfirm = { (e) => this.deletItem(e,item) }
                              >
                                 <Icon type = 'delete' />
                              </Popconfirm>
                           </Tooltip>,
                           <Tooltip key = 'ellipsis' title = '详情'
-                             getPopupContainer = { () => document.querySelector('.item-board-card .item-cards-' + index) }
+                             getPopupContainer = { () => document.querySelector('.item-board-card .item-cards-' + index + ' .ant-card-actions') }
                           >
                              <Icon type = 'ellipsis' />
                           </Tooltip>
