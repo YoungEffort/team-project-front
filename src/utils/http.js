@@ -47,7 +47,6 @@ Axios.interceptors.request.use(
 // 响应拦截
 Axios.interceptors.response.use(
    response => {
-      console.log(response.status,router.history)
       if (response.status === 401) {
          window.sessionStorage.removeItem('user_info')
          router.history.push('/login')
@@ -66,12 +65,24 @@ Axios.interceptors.response.use(
       }
    },
    error => {
-      notification.error({
-         message: '错误',
-         description: '网络繁忙，稍后重试',
-         key: 0,
-         duration: 3
-      });
+      if (error && error.response && error.response.status && error.response.status === 401) {
+         notification.warning({
+            message: '提示',
+            description: '登录过期请重新登录',
+            key: 0,
+            duration: 3
+         });
+         window.sessionStorage.removeItem('user_info')
+         router.history.push('/login')
+      } else{
+         notification.error({
+            message: error.response.status,
+            description: '网络繁忙，稍后重试',
+            key: 0,
+            duration: 3
+         });
+      }
+   
       return Promise.reject(error);
    }
 );

@@ -1,6 +1,6 @@
 // 新增项目 编辑项目
 import React, { Component } from 'react';
-import { Form, Input, Modal } from 'antd';
+import { Form, Input, Modal, Radio } from 'antd';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 class AddCompileItemFom extends Component {
@@ -9,7 +9,7 @@ class AddCompileItemFom extends Component {
       this.state = {
          modalInit: {
             title: '添加项目',
-            width: 450,
+            width: 480,
             wrapClassName: 'add-itme-board-modal'
          }
       };
@@ -61,6 +61,30 @@ class AddCompileItemFom extends Component {
                      />
                   ) }
                </FormItem>
+               <Form.Item label = '项目类型'>
+                  { getFieldDecorator('type')(
+                     <Radio.Group>
+                        <Radio value = '0'>PC端</Radio>
+                        <Radio value = '1'>移动端</Radio>
+                     </Radio.Group>
+                  ) }
+               </Form.Item>
+               <FormItem label = '仓库地址'>
+                  { getFieldDecorator('repositoryUrl', {
+                     rules: [
+                        { required: true, message: '请输入仓库地址' },
+                        { whitespace: true, message: '不能输入空格' }
+                     ]
+                  })(<Input placeholder = '请输入仓库地址' />) }
+               </FormItem>
+               <FormItem label = '测试预览地址'>
+                  { getFieldDecorator('testUrl', {
+                     rules: [
+                        { required: true, message: '请输入测试预览地址' },
+                        { whitespace: true, message: '不能输入空格' }
+                     ]
+                  })(<Input placeholder = '请输入测试预览地址' />) }
+               </FormItem>
                { /* <FormItem label = '项目图片'>
                   { getFieldDecorator('upImg', {
                      rules: [
@@ -91,6 +115,18 @@ const AddCompileItem = Form.create({
          description: Form.createFormField({
             ...props.addCompileData,
             value: props.addCompileData.description
+         }),
+         type: Form.createFormField({
+            ...props.addCompileData,
+            value: props.addCompileData.type
+         }),
+         repositoryUrl: Form.createFormField({
+            ...props.addCompileData,
+            value: props.addCompileData.repositoryUrl
+         }),
+         testUrl: Form.createFormField({
+            ...props.addCompileData,
+            value: props.addCompileData.testUrl
          })
       };
    }

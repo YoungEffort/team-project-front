@@ -7,7 +7,8 @@ import React, { Component } from 'react'
 import { Empty, Tooltip, Card, Icon, Button, message, Popconfirm } from 'antd'
 import './style.less'
 import ItemSearch from './component/search' // 查询
-import AddCompileItem from './component/addCompileItem' // 新增
+import AddCompileItem from './component/addCompileItem' // 新增--编辑
+import PreviewModal from './component/previewModal' // 新增--编辑
 import { clearTrim } from '@/utils/reg'
 import {
    querylist,
@@ -19,16 +20,21 @@ class ItemBoard extends Component {
    constructor (props) {
       super(props);
       this.state = {
-      // 弹窗显示
+         // 新增编辑弹窗显示
          addMoadlVisible: false,
-         // 新增编辑弹窗数据
+         // 新增编辑弹窗表单数据
          addCompileData: {
             pid: '', // 项目id
             img: '', // 项目预览图片
             pName: '', // 项目名称
             developer: '', // 开发人员
-            description: '' // 项目描述
+            description: '', // 项目描述
+            type: '0', // 项目类型
+            repositoryUrl: '', // 仓库地址
+            testUrl: '' // 测试预览地址
          },
+         // 测试预览信息弹窗
+         previewModalVisible: false,
          // 判断是编辑还是新增
          isAddCompile: 0, // 0 新增 1 编辑
          popconfirmInit: {
@@ -50,14 +56,31 @@ class ItemBoard extends Component {
       this.initView();
    }
   // 视图初始化
-  initView = () => {
-     querylist({}).then(res => {
+  initView = ( queryData ) => {
+     querylist({
+        ...queryData
+     }).then(res => {
         if (parseFloat(res.code) === 200) {
            this.setState({
               cardData: res.data
            });
         }
      });
+  }
+  // 搜索--查询
+  queryItem = (e,form) => {
+     e.preventDefault();
+     form.validateFields((err, values) => {
+        if (!err) {
+           values = clearTrim(values)
+           this.initView(values)
+        }
+     })
+  }
+  // 搜索--重置
+  queryReset = (form) => {
+     form.resetFields()
+     this.initView()
   }
   // 新增和编辑--弹窗显示隐藏
   modalShowHide = form => {
@@ -69,7 +92,10 @@ class ItemBoard extends Component {
            img: '', // 项目预览图片
            pName: '', // 项目名称
            developer: '', // 开发人员
-           description: '' // 项目描述
+           description: '', // 项目描述
+           type: '0',
+           repositoryUrl: '', // 仓库地址
+           testUrl: '' // 测试预览地址
         }
         form.resetFields()
      } else {
@@ -119,9 +145,10 @@ class ItemBoard extends Component {
      });
   }
   // 编辑--项目 数据获取
-  compileItem = item => {
-     console.log(item);
+  compileItem = (e,item) => {
+     e.stopPropagation()
      let _this = this;
+     console.log(item)
      this.setState(
         {
            isAddCompile: 1,
@@ -150,7 +177,7 @@ class ItemBoard extends Component {
      });
   }
   // 删除指定项目
-  deletItem = item => {
+  deletItem = (e,item) => {
      console.log('删除的数据', item.pid);
      deleteProject({
         id: item.pid
@@ -163,16 +190,21 @@ class ItemBoard extends Component {
            }
         })
   }
+  // 项目
   render () {
      let {
         popconfirmInit,
         addMoadlVisible,
         addCompileData,
-        cardData
+        cardData,
+        previewModalVisible
      } = this.state;
      return (
         <div className = 'item-board'>
-           <ItemSearch />
+           <ItemSearch 
+              queryItem = { this.queryItem }
+              queryReset = { this.queryReset }
+           />
            <div className = 'item-add'>
               <Button icon = 'plus' onClick = { this.addItem }>
             新增
@@ -195,22 +227,28 @@ class ItemBoard extends Component {
                           <Tooltip
                              key = 'edit'
                              title = '编辑'
-                             onClick = { () => {
-                                this.compileItem(item);
+                             getPopupContainer = { () => document.querySelector('.item-board-card') }
+                             onClick = { (e) => {
+                                this.compileItem(e,item);
                              } }
                           >
                              <Icon type = 'edit' />
                           </Tooltip>,
 
-                          <Tooltip key = 'delete' title = '删除'>
+                          <Tooltip key = 'delete' title = '删除'
+                             getPopupContainer = { () => document.querySelector('.item-board-card') }
+                          >
                              <Popconfirm
                                 { ...popconfirmInit }
-                                onConfirm = { () => this.deletItem(item) }
+                                getPopupContainer = { () => document.querySelector('.item-board-card') }
+                                onConfirm = { (e) => this.deletItem(e,item) }
                              >
                                 <Icon type = 'delete' />
                              </Popconfirm>
                           </Tooltip>,
-                          <Tooltip key = 'ellipsis' title = '详情'>
+                          <Tooltip key = 'ellipsis' title = '详情'
+                             getPopupContainer = { () => document.querySelector('.item-board-card') }
+                          >
                              <Icon type = 'ellipsis' />
                           </Tooltip>
                        ] }
@@ -233,6 +271,9 @@ class ItemBoard extends Component {
               addMoadlVisible = { addMoadlVisible }
               modalShowHide = { this.modalShowHide }
               modalConfirm = { this.modalConfirm }
+           />
+           <PreviewModal
+              previewModalVisible = { previewModalVisible }
            />
            {
               cardData && cardData.length <= 0 ?

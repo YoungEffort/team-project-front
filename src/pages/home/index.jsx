@@ -32,7 +32,6 @@ class Home extends Component {
          .then((res) => {
             if( parseFloat(res.code) === 200){
                let listData = JSON.parse(JSON.stringify(res.data))
-               console.log(listData)
                listData.map((item,index) => {
                   item.text = this.initText(index)
                   item.key = index
@@ -40,7 +39,6 @@ class Home extends Component {
                this.setState({
                   listData
                })
-               console.log(res)
             }
          })
    }

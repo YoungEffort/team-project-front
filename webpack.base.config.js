@@ -105,7 +105,7 @@ module.exports={
    plugins: [
       //HTML 模版导入
       new HtmlWebpackPlugin({
-         title: 'React-cli',
+         title: '水镜系统',
          template: path.resolve(__dirname, './public/index.html'),
          favicon: './public/favicon.ico' // 添加小图标
       }),
