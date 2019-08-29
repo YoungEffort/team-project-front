@@ -4,8 +4,13 @@
 */
 
 // 按需加载
-import Loadable from '@/utils/loadable'; // 组件
-import Home from '@/pages/home/index';
+// import Loadable from '@/utils/loadable' // 组件
+import Home from '@/pages/home/index'
+import taskManage from './taskManage' // 任务管理
+import itemManage from './itemManage' // 项目管理
+import techManage from './techManage' // 技术栈管理
+import peopleManage from './peopleManage' // 人员管理
+
 const routerData = [
    {
       icon: 'home',
@@ -14,32 +19,10 @@ const routerData = [
       component: Home,
       isType: true
    },
-   {
-      icon: 'deployment-unit',
-      title: '项目管理',
-      name: 'itemAdmin',
-      children: [
-         {
-            title: '项目看板',
-            name: 'itemBoard',
-            path: '/itemAdmin/itemBoard',
-            component: Loadable(() => import('@/pages/itemBoard'))
-         }
-      ]
-   },
-   {
-      icon: 'deployment-unit',
-      title: '技术栈管理',
-      name: 'tech',
-      children: [
-         {
-            title: '技术栈看板',
-            name: 'techBoard',
-            path: '/tech/techBoard',
-            component: Loadable(() => import('@/pages/techBoard'))
-         }
-      ]
-   }
+   taskManage,
+   itemManage,
+   techManage,
+   peopleManage
 ];
 
 // 添加key 防止添加错误
