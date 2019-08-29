@@ -39,7 +39,7 @@ class ItemBoard extends Component {
          isAddCompile: 0, // 0 新增 1 编辑
          popconfirmInit: {
             placement: 'top',
-            title: '是否缺确认删除'
+            title: '是否确认删除'
          },
          // 卡片数据
          cardData: [
@@ -214,11 +214,12 @@ class ItemBoard extends Component {
               </Button>
            </div>
            <div className = 'item-board-card'>
-              { cardData.map(item => {
+              { cardData.map((item,index) => {
                  return (
                     <Card
                        key = { item.pid }
                        hoverable
+                       className = { 'item-cards-'+ index }
                        cover = {
                           <img
                              className = 'item-card-img'
@@ -230,7 +231,7 @@ class ItemBoard extends Component {
                           <Tooltip
                              key = 'edit'
                              title = '编辑'
-                             getPopupContainer = { () => document.querySelector('.item-board-card') }
+                             getPopupContainer = { () => document.querySelector('.item-board-card .item-cards-' + index) }
                              onClick = { (e) => {
                                 this.compileItem(e,item);
                              } }
@@ -239,18 +240,18 @@ class ItemBoard extends Component {
                           </Tooltip>,
 
                           <Tooltip key = 'delete' title = '删除'
-                             getPopupContainer = { () => document.querySelector('.item-board-card') }
+                             getPopupContainer = { () => document.querySelector('.item-board-card .item-cards-' + index) }
                           >
                              <Popconfirm
                                 { ...popconfirmInit }
-                                getPopupContainer = { () => document.querySelector('.item-board-card') }
+                                getPopupContainer = { () => document.querySelector('.item-board-card .item-cards-' + index) }
                                 onConfirm = { (e) => this.deletItem(e,item) }
                              >
                                 <Icon type = 'delete' />
                              </Popconfirm>
                           </Tooltip>,
                           <Tooltip key = 'ellipsis' title = '详情'
-                             getPopupContainer = { () => document.querySelector('.item-board-card') }
+                             getPopupContainer = { () => document.querySelector('.item-board-card .item-cards-' + index) }
                           >
                              <Icon type = 'ellipsis' />
                           </Tooltip>
