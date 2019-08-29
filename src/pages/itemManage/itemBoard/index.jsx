@@ -135,7 +135,10 @@ class ItemBoard extends Component {
      addProject({
         pName: values.pName,
         developer: values.developer,
-        description: values.description
+        description: values.description,
+        type: values.type, // 项目类型
+        repositoryUrl: values.repositoryUrl, // 仓库地址
+        testUrl: values.testUrl // 测试预览地址
      }).then(res => {
         if (parseFloat(res.code) === 200) {
            message.success('新增成功')
