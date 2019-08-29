@@ -25,7 +25,7 @@ const routerData = [
    peopleManage
 ];
 
-// 添加key 防止添加错误
+// 统一添加key 防止添加错误
 let initMenuData = routerConfig => {
    let init = (routers, parentKey) => {
       routers.forEach((item, index) => {

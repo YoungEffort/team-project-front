@@ -27,12 +27,12 @@ class SearchForm extends Component {
            <Form layout = 'inline' onSubmit = { this.querySubmit }>
               <FormItem label = '项目名称'>
                  { getFieldDecorator('itemName', {})(
-                    <Input type = 'text' placeholder = '请输入设置密码' />
+                    <Input type = 'text' placeholder = '请输入项目名称' />
                  ) }
               </FormItem>
               <FormItem label = '开发人员'>
                  { getFieldDecorator('developer', {})(
-                    <Input type = 'text' placeholder = '请输入设置密码' />
+                    <Input type = 'text' placeholder = '请输入开发人员' />
                  ) }
               </FormItem>
               <FormItem className = 'form-btn'>

@@ -66,6 +66,12 @@ Axios.interceptors.response.use(
       }
    },
    error => {
+      notification.error({
+         message: '错误',
+         description: '网络繁忙，稍后重试',
+         key: 0,
+         duration: 3
+      });
       return Promise.reject(error);
    }
 );

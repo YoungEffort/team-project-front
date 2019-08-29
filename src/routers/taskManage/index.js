@@ -1,7 +1,7 @@
 // 一级菜单---任务管理
 import Loadable from '@/utils/loadable'; // 按需加载 组件
 export default  {
-   icon: 'deployment-unit',
+   icon: 'database',
    title: '任务管理',
    name: 'taskManage',
    children: [

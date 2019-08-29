@@ -4,7 +4,7 @@
    2019-08-26
 */
 import React, { Component } from 'react'
-import { Card } from 'antd'
+import { Card, Empty  } from 'antd'
 import { getHomeList } from '@/api/home'
 import './style.less'
 class Home extends Component {
@@ -60,6 +60,11 @@ class Home extends Component {
       }
       return text
    }
+   // 点击卡片跳转路由
+   goPages = (url) => {
+      console.log(this.props)
+      this.props.history.push({ pathname: url });
+   }
    render () {
       let { listData, logoImg } = this.state
       return (
@@ -68,6 +73,7 @@ class Home extends Component {
                listData.map((item,index) => {
                   return (
                      <Card
+                        onClick = { () => this.goPages(item.url) }
                         key = { item.key }
                         hoverable
                         cover = {
@@ -87,6 +93,13 @@ class Home extends Component {
                      </Card>
                   );
                })
+            }
+            {
+               listData && listData.length <= 0 ?
+                  <div className = 'g-no-data'>
+                     <Empty />
+                  </div>
+                  : ''
             }
          </div>
       )
