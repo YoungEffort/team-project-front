@@ -44,7 +44,7 @@ module.exports=merge(
       //本地服务器配置
       devServer: {
          contentBase: './dist',
-         host: 'localhost',
+         host: '0.0.0.0',
          port: 9999,
          historyApiFallback: true,
          overlay: {
