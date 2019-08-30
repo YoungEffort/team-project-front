@@ -1,3 +1,4 @@
+const blank = /^\s+$/
 const trim = /(^\s*)|(\s*$)/g;
 const phone = /^[1][3-9][0-9]{9}$/;
 const number = /^[0-9]*[1-9][0-9]*$/;
@@ -12,7 +13,7 @@ let carEnergyNumbers = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂
 // 车牌验证，包含新能源汽车 大型新能源车
 let carNweNum = /^(([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z](([0-9]{5}[DF])|([DF]([A-HJ-NP-Z0-9])[0-9]{4})))|([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z][A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳使领]))$/;
 
-// 清楚前后空格
+// 清除前后空格
 function clearTrim (obj, str) {
    // eslint-disable-next-line no-unused-vars
    for (let i in obj) {
@@ -129,6 +130,7 @@ function idCardVerify (idcard) {
 }
 
 export {
+   blank,
    trim,
    idCardVerify,
    clearTrim,

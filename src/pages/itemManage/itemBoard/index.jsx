@@ -4,12 +4,12 @@
    2019-08-26
 */
 import React, { Component } from 'react'
-import { Empty, Tooltip, Card, Icon, Button, message, Popconfirm } from 'antd'
+import { Empty, Tooltip, Card, Icon, Button, message, Popconfirm, Form } from 'antd'
 import './style.less'
 import ItemSearch from './component/search' // 查询
 import AddCompileItem from './component/addCompileItem' // 新增--编辑
 import PreviewModal from './component/previewModal' // 新增--编辑
-import { clearTrim } from '@/utils/reg'
+import { blank, clearTrim } from '@/utils/reg'
 import {
    querylist,
    deleteProject,
@@ -21,7 +21,7 @@ class ItemBoard extends Component {
       super(props);
       this.state = {
          // 新增编辑弹窗显示
-         addMoadlVisible: false,
+         addMoadlVisible: true,
          // 新增编辑弹窗表单数据
          addCompileData: {
             pid: '', // 项目id
@@ -33,6 +33,20 @@ class ItemBoard extends Component {
             repositoryUrl: '', // 仓库地址
             testUrl: '' // 测试预览地址
          },
+         // 测试预览地址数组
+         testUrlData: [
+            {
+               key: '0',
+               // 地址
+               testUrl: '',
+               // 备注
+               remark: '',
+               // 是否错误
+               isError: false,
+               // 提示文本
+               msg: ''
+            }
+         ],
          // 测试预览信息弹窗
          previewModalVisible: false,
          // 判断是编辑还是新增
@@ -53,7 +67,8 @@ class ItemBoard extends Component {
       };
    }
    componentDidMount () {
-      this.initView();
+      this.initView()
+      // this.preAddrInit() // 初始化 弹窗表单预览地址
    }
   // 视图初始化
   initView = ( queryData ) => {
@@ -105,6 +120,56 @@ class ItemBoard extends Component {
         addMoadlVisible,
         addCompileData
      });
+  }
+  // 预览地址 --- 新增
+  preAddrAdd = () => {
+     let { testUrlData } = this.state
+     testUrlData.push({
+        key: '' + testUrlData.length ,
+        // 地址
+        testUrl: '',
+        // 备注
+        remark: '',
+        // 是否错误
+        isError: false,
+        msg: ''
+     }) 
+     this.setState({
+        testUrlData
+     })
+  }
+  // 预览地址 --- 删除
+  preAddrDelete = (data) => {
+     let { testUrlData } = this.state
+     let newTestUrlData = JSON.parse(JSON.stringify(testUrlData))
+     for (let i=0; i< testUrlData.length; i++ ) {
+        let item = testUrlData[i]
+        if (data.key === item.key) {
+           newTestUrlData.splice(i,1)
+           break
+        }
+     }
+     newTestUrlData.forEach((item,index) => {
+        item.key = '' + index
+     })
+     this.setState({
+        testUrlData: newTestUrlData
+     })
+  }
+  // 预览地址 --- 值变化监听
+  preAddrOnchange = (e, type, data) => {
+     let {  testUrlData } = this.state
+     let val = e.target.value
+     // val = clearTrim({},val)
+     type === 0 ?
+        testUrlData[parseFloat(data.key)].testUrl = val
+        :
+        testUrlData[parseFloat(data.key)].remark = val
+     testUrlData[parseFloat(data.key)].isError = !val || val.length <= 0 || (blank.test(val) &&  val.length > 0 )  ? true :  false
+     testUrlData[parseFloat(data.key)].msg =  blank.test(val) &&  val.length > 0 ? '不能输入空格' : '请输入地址'
+     this.setState({
+        testUrlData
+     })
   }
   // 新增和编辑--弹窗确定
   modalConfirm = (e, form) => {
@@ -200,7 +265,8 @@ class ItemBoard extends Component {
         addMoadlVisible,
         addCompileData,
         cardData,
-        previewModalVisible
+        previewModalVisible,
+        testUrlData
      } = this.state;
      return (
         <div className = 'item-board'>
@@ -229,7 +295,7 @@ class ItemBoard extends Component {
                        }
                        actions = { [
                           <Tooltip
-                             key = 'edit'
+                             key = { 'edit' + index }
                              title = '编辑'
                              getPopupContainer = { () => document.querySelector('.item-board-card .item-cards-' + index + ' .ant-card-actions') }
                              onClick = { (e) => {
@@ -239,7 +305,7 @@ class ItemBoard extends Component {
                              <Icon type = 'edit' />
                           </Tooltip>,
 
-                          <Tooltip key = 'delete' title = '删除'
+                          <Tooltip key = { 'delete' + index } title = '删除'
                              getPopupContainer = { () => document.querySelector('.item-board-card .item-cards-' + index + ' .ant-card-actions') }
                           >
                              <Popconfirm
@@ -250,7 +316,7 @@ class ItemBoard extends Component {
                                 <Icon type = 'delete' />
                              </Popconfirm>
                           </Tooltip>,
-                          <Tooltip key = 'ellipsis' title = '详情'
+                          <Tooltip key = { 'ellipsis' + index } title = '详情'
                              getPopupContainer = { () => document.querySelector('.item-board-card .item-cards-' + index + ' .ant-card-actions') }
                           >
                              <Icon type = 'ellipsis' />
@@ -273,8 +339,12 @@ class ItemBoard extends Component {
            <AddCompileItem
               addCompileData = { addCompileData }
               addMoadlVisible = { addMoadlVisible }
+              testUrlData = { testUrlData }
               modalShowHide = { this.modalShowHide }
               modalConfirm = { this.modalConfirm }
+              preAddrAdd = { this.preAddrAdd }
+              preAddrDelete = { this.preAddrDelete }
+              preAddrOnchange = { this.preAddrOnchange }
            />
            <PreviewModal
               previewModalVisible = { previewModalVisible }
