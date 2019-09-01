@@ -35,9 +35,7 @@ class TaskBoard extends Component {
                clickTap = { this.clickTap }
             />
             <div className = 'g-no-data'>
-               <ul>
-                  
-               </ul>
+               <ul />
                <Empty />
             </div>
          </div>
