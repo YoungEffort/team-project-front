@@ -1,19 +1,20 @@
 // 新增项目 编辑项目
 import React, { Component } from 'react';
-import { Form, Input, Modal, Radio, Icon, Tooltip, Popconfirm, Upload, message } from 'antd';
+// import { Form, Input, Modal, Radio, Icon, Tooltip, Popconfirm, Upload, message } from 'antd';
+import { Form, Input, Modal, Radio, Icon, Tooltip, Popconfirm } from 'antd';
 const FormItem = Form.Item;
 const { TextArea } = Input;
-function beforeUpload (file) {
-   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-   if (!isJpgOrPng) {
-      message.error('You can only upload JPG/PNG file!');
-   }
-   const isLt2M = file.size / 1024 / 1024 < 2;
-   if (!isLt2M) {
-      message.error('Image must smaller than 2MB!');
-   }
-   return isJpgOrPng && isLt2M;
-}
+// function beforeUpload (file) {
+//    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+//    if (!isJpgOrPng) {
+//       message.error('You can only upload JPG/PNG file!');
+//    }
+//    const isLt2M = file.size / 1024 / 1024 < 2;
+//    if (!isLt2M) {
+//       message.error('Image must smaller than 2MB!');
+//    }
+//    return isJpgOrPng && isLt2M;
+// }
 
 function getBase64 (img, callback) {
    const reader = new FileReader();
@@ -112,15 +113,16 @@ class AddCompileItemFom extends Component {
       }
    };
    render () {
-      let { modalInit,imageUrl  } = this.state;
+      //  let { modalInit,imageUrl  } = this.state;
+      let { modalInit } = this.state;
       let { addMoadlVisible, form, modalShowHide, modalConfirm, preAddrAdd } = this.props;
       const { getFieldDecorator } = form;
-      const uploadButton = (
-         <div>
-            <Icon type = { this.state.loading ? 'loading' : 'plus' } />
-            <div className = 'ant-upload-text'>Upload</div>
-         </div>
-      );
+      // const uploadButton = (
+      //    <div>
+      //       <Icon type = { this.state.loading ? 'loading' : 'plus' } />
+      //       <div className = 'ant-upload-text'>Upload</div>
+      //    </div>
+      // );
       return (
          <Modal
             { ...modalInit }
@@ -172,7 +174,7 @@ class AddCompileItemFom extends Component {
                      </Radio.Group>
                   ) }
                </Form.Item>
-               <FormItem label = '项目图片'>
+               { /* <FormItem label = '项目图片'>
                   <div className = 'dropbox'>
                      { getFieldDecorator('dragger', {
                         valuePropName: 'fileList',
@@ -194,7 +196,7 @@ class AddCompileItemFom extends Component {
                         </Upload>
                      ) }
                   </div>
-               </FormItem>
+               </FormItem> */ }
                <FormItem label = '仓库地址'>
                   { getFieldDecorator('repositoryUrl', {
                      rules: [

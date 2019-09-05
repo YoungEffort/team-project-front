@@ -21,7 +21,7 @@ class ItemBoard extends Component {
       super(props);
       this.state = {
          // 新增编辑弹窗显示
-         addMoadlVisible: true,
+         addMoadlVisible: false,
          // 新增编辑弹窗表单数据
          addCompileData: {
             pid: '', // 项目id
